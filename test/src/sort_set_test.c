@@ -37,5 +37,5 @@ int main(void) {
 
   FINISH_TEST();
 
-  return TEST_RESULT();
+  return test_result();
 }
