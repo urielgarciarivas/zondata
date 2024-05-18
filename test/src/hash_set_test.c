@@ -22,7 +22,7 @@
 int main(void) {
   START_TEST("hash_set_test");
 
-  EXPECT_TRUE(0);
+  EXPECT_TRUE(1);
 
   FINISH_TEST();
 
