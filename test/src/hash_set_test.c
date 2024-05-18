@@ -16,10 +16,8 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#include <stdio.h>
-
 #include "../../inc/hash_set.h"
-#include "deps/zontest/comparators.h"
+#include "../deps/zontest/comparators.h"
 
 int main(void) {
   START_TEST("hash_set_test");
@@ -28,5 +26,5 @@ int main(void) {
 
   FINISH_TEST();
 
-  return 0;
+  return TEST_RESULT();
 }

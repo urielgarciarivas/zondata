@@ -16,7 +16,7 @@
 
 # Compilation.
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -I./inc/
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -I./inc/ -I./test/deps
 
 # All targets. This assumes there exists a .h, .c, and _test.c per target.
 TARGETS = array \
@@ -35,9 +35,6 @@ SRC_DIR = ./test/src
 BIN_DIR = ./test/bin
 BIN = $(patsubst %,$(BIN_DIR)/%_test,$(TARGETS))
 
-# Top-level rule.
-all: test
-
 # General rule for every object file.
 $(OBJ_DIR)/%.o: ./src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -45,6 +42,9 @@ $(OBJ_DIR)/%.o: ./src/%.c
 # General rule for every test binary.
 $(BIN_DIR)/%_test: $(SRC_DIR)/%_test.c $(OBJ_DIR)/%.o
 	$(CC) $(CFLAGS) $^ -o $@
+
+# Top-level rule.
+all: $(OBJ)
 
 # Automatic rule to run all tests in BIN.
 # Stop if one test fails.

@@ -17,37 +17,30 @@
  */
 
 #include "../../inc/array.h"
-#include "deps/zontest/comparators.h"
+#include "../deps/zontest/comparators.h"
 
 int main(void) {
   START_TEST("array_test");
 
-  const size_t length = 1;
-  const int first_element = length - 1;
+  const size_t length = 5;
+  const int first_element = 0;
+  const int last_element = length - 1;
   array* arr = allocate_array(first_element);
-
   EXPECT_EQUAL(arr->data[0], first_element);
-  EXPECT_EQUAL(arr->size, length);
 
-  add_to_array(arr, 5);
-
-  EXPECT_EQUAL(arr->data[1], 5);
-  EXPECT_EQUAL(arr->size, 2);
-
-  deallocate_array(arr);
-/*
   for (int i = first_element + 1; i <= last_element; ++i) {
-    add_to_linked_list(list, i);
+    add_to_array(arr, i);
   }
 
-  EXPECT_TRUE(exist_in_linked_list(list, first_element + 2));
-  EXPECT_FALSE(exist_in_linked_list(list, last_element + 1));
-  EXPECT_EQUAL(list->size, len);
+  EXPECT_TRUE(exist_in_array(arr, first_element + 2));
+  EXPECT_FALSE(exist_in_array(arr, last_element + 1));
+  EXPECT_EQUAL(arr->size, length);
 
-  linked_list* list_copy = copy_linked_list(list);
+  array* arr_copy = allocate_copy_array(arr);
+  EXPECT_FALSE(are_equal_array(arr_copy, NULL));
+  EXPECT_TRUE(are_equal_array(arr, arr_copy));
 
-  EXPECT_TRUE(equal_linked_list(list, list));
-  EXPECT_TRUE(equal_linked_list(list, list_copy));
+/*
   reverse_linked_list(list);
   EXPECT_FALSE(equal_linked_list(list, list_copy));
   reverse_linked_list(list_copy);
@@ -65,10 +58,12 @@ int main(void) {
     EXPECT_EQUAL(node->value, curr_element--);
   }
 
-  delete_linked_list(list);
-  delete_linked_list(list_copy);
 */
+
+  deallocate_array(arr);
+  deallocate_array(arr_copy);
+
   FINISH_TEST();
 
-  return 0;
+  return TEST_RESULT();
 }

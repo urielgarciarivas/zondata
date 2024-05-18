@@ -44,13 +44,21 @@ inline sort_set* allocate_empty_sort_set() {
   return response;
 }
 
+void deallocate_elements_in_sort_set(sort_set* set) {
+  if (set == NULL || set->root == NULL) {
+    return;
+  }
+
+
+}
+
 void deallocate_sort_set(sort_set* set) {
   if (set == NULL) {
     return;
   }
 
   if (set->root != NULL) {
-    DEALLOCATE(set->root);
+    deallocate_elements_in_sort_set(set);
   }
 
   DEALLOCATE(set);

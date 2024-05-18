@@ -26,7 +26,9 @@
 do {                                                      \
   (pointer) = (type *) malloc(sizeof(type));              \
   if ((pointer) == NULL) {                                \
-    fprintf(stderr, "ERROR: Out of memory. "              \
+    fprintf(stderr, "[__ZNG_MEMORY_H__:ALLOCATE] "        \
+                    "ERROR: "                             \
+                    "Error allocating memory. "           \
                     "Could not allocate memory of type '" \
                     #type                                 \
                     "' for the variable '"                \
@@ -35,18 +37,37 @@ do {                                                      \
   }                                                       \
 } while (0)
 
+#define COALLOCATE(type, pointer, size)                   \
+do {                                                      \
+  (pointer) = (type *) calloc((size), sizeof(type));      \
+  if ((pointer) == NULL) {                                \
+    fprintf(stderr, "[__ZNG_MEMORY_H__:COALLOCATE] "      \
+                    "ERROR:"                              \
+                    "Error allocating memory. "           \
+                    "Could not allocate memory of type '" \
+                    #type                                 \
+                    "' for the variable '"                \
+                    #pointer                              \
+                    "' that required a size of '"         \
+                    "%d"                                  \
+                    "' using calloc.\n", (int) (size));   \
+  }                                                       \
+} while (0)
+
 #define REALLOCATE(type, pointer, size)                                      \
 do {                                                                         \
   type* __zng_temp_ptr = (type *) realloc((pointer), (size) * sizeof(type)); \
   if (__zng_temp_ptr == NULL) {                                              \
-    fprintf(stderr, "ERROR: Out of memory. "                                 \
-                    "Could not allocate memory of type '"                    \
+    fprintf(stderr, "[__ZNG_MEMORY_H__:REALLOCATE] "                         \
+                    "ERROR:"                                                 \
+                    "Error reallocating memory. "                            \
+                    "Could not reallocate memory of type '"                  \
                     #type                                                    \
                     "' for the variable '"                                   \
                     #pointer                                                 \
                     "' that required a new size of '"                        \
-                    "%zu"                                                    \
-                    "' using malloc.\n", (size));                            \
+                    "%d"                                                     \
+                    "' using realloc.\n", (int) (size));                     \
   } else {                                                                   \
     pointer = __zng_temp_ptr;                                                \
   }                                                                          \
@@ -54,8 +75,10 @@ do {                                                                         \
 
 #define DEALLOCATE(pointer) \
 do {                        \
-  free((pointer));          \
-  (pointer) = NULL;         \
+  if ((pointer) != NULL) {  \
+    free((pointer));        \
+    (pointer) = NULL;       \
+  }                         \
 } while (0)
 
 #endif // __ZNG_MEMORY_H__

@@ -16,10 +16,8 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#include <stdio.h>
-
 #include "../../inc/sort_set.h"
-#include "deps/zontest/comparators.h"
+#include "../deps/zontest/comparators.h"
 
 int main(void) {
   START_TEST("sort_set_test");
@@ -29,6 +27,8 @@ int main(void) {
   const int first_element = 0;
   sort_set* set = allocate_sort_set(1);
 
+  EXPECT_TRUE(1);
+
   for (int i = first_element + 1; i <= last_element; ++i) {
     //add_to_sort_set(set, i);
   }
@@ -37,5 +37,5 @@ int main(void) {
 
   FINISH_TEST();
 
-  return 0;
+  return TEST_RESULT();
 }

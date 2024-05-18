@@ -30,6 +30,26 @@ inline array* allocate_array(int value) {
   return response;
 }
 
+inline array* allocate_preset_array(int size, int value) {
+  if (size < 0) {
+    return NULL;
+  } else if (size == 0) {
+    return allocate_empty_array();
+  }
+
+  array* response;
+
+  ALLOCATE(array, response);
+  COALLOCATE(int, response->data, size);
+  response->size = size;
+
+  for (size_t i = 0; i < response->size; ++i) {
+    response->data[i] = value;
+  }
+
+  return response;
+}
+
 inline array* allocate_empty_array() {
   array* response;
 
@@ -40,7 +60,23 @@ inline array* allocate_empty_array() {
   return response;
 }
 
-inline void deallocate_array(array* arr) {
+array* allocate_copy_array(const array*const arr) {
+  if (arr == NULL) {
+    return NULL;
+  } else if (is_empty_array(arr)) {
+    return allocate_empty_array();
+  }
+
+  array* copy = allocate_preset_array(arr->size, 0);
+
+  for (size_t i = 0; i < copy->size; ++i) {
+    copy->data[i] = arr->data[i];
+  }
+
+  return copy;
+}
+
+inline void deallocate_elements_in_array(array* arr) {
   if (arr == NULL) {
     return;
   }
@@ -49,11 +85,24 @@ inline void deallocate_array(array* arr) {
     DEALLOCATE(arr->data);
   }
 
+  arr->size = 0;
+}
+
+inline void deallocate_array(array* arr) {
+  if (arr == NULL) {
+    return;
+  }
+
+  deallocate_elements_in_array(arr);
   DEALLOCATE(arr);
 }
 
-inline bool is_empty_array(const array*const arr) {
+inline bool is_null_or_empty_array(const array*const arr) {
   return arr == NULL || (arr->data == NULL && arr->size == 0);
+}
+
+inline bool is_empty_array(const array*const arr) {
+  return arr != NULL && arr->data == NULL && arr->size == 0;
 }
 
 inline void add_to_array(array*const arr, int value) {
@@ -80,7 +129,7 @@ inline void add_to_empty_array(array*const arr, int value) {
 }
 
 bool exist_in_array(const array*const arr, int target) {
-  if (is_empty_array(arr)) {
+  if (is_null_or_empty_array(arr)) {
     return false;
   }
 
@@ -92,3 +141,28 @@ bool exist_in_array(const array*const arr, int target) {
 
   return false;
 }
+
+//extern void reverse_array(array*const list);
+
+bool are_equal_array(const array*const lhs, const array*const rhs) {
+  if (lhs == NULL && rhs == NULL) {
+    return true;
+  } else if (is_empty_array(lhs) && is_empty_array(rhs)) { 
+    // TODO: Edge case when one is NULL but the other is empty.
+    return true;
+  } else if (is_null_or_empty_array(lhs)
+          || is_null_or_empty_array(rhs)
+          || lhs->size != rhs->size) {
+    return false;
+  }
+
+  for (size_t i = 0; i < lhs->size; ++i) {
+    if (lhs->data[i] != rhs->data[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+//extern void sort_array(array*const list);

@@ -17,15 +17,15 @@
  */
 
 #include "../../inc/linked_list.h"
-#include "deps/zontest/comparators.h"
+#include "../deps/zontest/comparators.h"
 
 int main(void) {
   START_TEST("linked_list_test");
 
   // length should not be >= INT_MAX.
   const size_t length = 5;
-  const int last_element = length - 1;
   const int first_element = 0;
+  const int last_element = length - 1;
   linked_list* list = allocate_linked_list(first_element);
 
   for (int i = first_element + 1; i <= last_element; ++i) {
@@ -36,7 +36,7 @@ int main(void) {
   EXPECT_FALSE(exist_in_linked_list(list, last_element + 1));
   EXPECT_EQUAL(list->size, length);
 
-  linked_list* list_copy = copy_linked_list(list);
+  linked_list* list_copy = allocate_copy_linked_list(list);
 
   EXPECT_TRUE(are_equal_linked_list(list, list));
   EXPECT_TRUE(are_equal_linked_list(list, list_copy));
@@ -46,7 +46,7 @@ int main(void) {
   EXPECT_TRUE(are_equal_linked_list(list, list_copy));
   EXPECT_TRUE(are_equal_linked_list(list_copy, list_copy));
 
-  delete_single_match_linked_list(list_copy, 3);
+  delete_first_match_linked_list(list_copy, 3);
   EXPECT_FALSE(exist_in_linked_list(list_copy, 3));
   EXPECT_FALSE(are_equal_linked_list(list, list_copy));
 
@@ -65,5 +65,5 @@ int main(void) {
 
   FINISH_TEST();
 
-  return 0;
+  return TEST_RESULT();
 }
