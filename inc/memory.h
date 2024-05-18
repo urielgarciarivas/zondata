@@ -26,14 +26,12 @@
 do {                                                           \
   (__ZNG_POINTER) = (__ZNG_TYPE *) malloc(sizeof(__ZNG_TYPE)); \
   if ((__ZNG_POINTER) == NULL) {                               \
-    fprintf(stderr, "[__ZNG_MEMORY_H__:ALLOCATE] "             \
-                    "ERROR: "                                  \
-                    "Error allocating memory. "                \
+    fprintf(stderr, "ERROR: Error allocating memory. "         \
                     "Could not allocate memory of type '"      \
                     #__ZNG_TYPE                                \
                     "' for the variable '"                     \
                     #__ZNG_POINTER                             \
-                    "' using malloc.\n");                      \
+                    "' using malloc().\n");                    \
   }                                                            \
 } while (0)
 
@@ -41,46 +39,46 @@ do {                                                           \
 do {                                                                         \
   (__ZNG_POINTER) = (__ZNG_TYPE *) calloc((__ZNG_SIZE), sizeof(__ZNG_TYPE)); \
   if ((__ZNG_POINTER) == NULL) {                                             \
-    fprintf(stderr, "[__ZNG_MEMORY_H__:COALLOCATE] "                         \
-                    "ERROR: "                                                \
-                    "Error allocating memory. "                              \
+    fprintf(stderr, "ERROR: Error allocating memory. "                       \
                     "Could not allocate memory of type '"                    \
                     #__ZNG_TYPE                                              \
                     "' for the variable '"                                   \
                     #__ZNG_POINTER                                           \
                     "' that required a size of '"                            \
                     "%d"                                                     \
-                    "' using calloc.\n", (int) (__ZNG_SIZE));                \
+                    "' using calloc().\n", (int) (__ZNG_SIZE));              \
   }                                                                          \
 } while (0)
 
-#define REALLOCATE(__ZNG_TYPE, __ZNG_POINTER, __ZNG_SIZE)        \
-do {                                                             \
-  __ZNG_TYPE* __zng_temp_ptr =                                   \
-      (__ZNG_TYPE *) realloc((__ZNG_POINTER),                    \
-                             (__ZNG_SIZE) * sizeof(__ZNG_TYPE)); \
-  if (__zng_temp_ptr == NULL) {                                  \
-    fprintf(stderr, "[__ZNG_MEMORY_H__:REALLOCATE] "             \
-                    "ERROR: "                                    \
-                    "Error reallocating memory. "                \
-                    "Could not reallocate memory of type '"      \
-                    #__ZNG_TYPE                                  \
-                    "' for the variable '"                       \
-                    #__ZNG_POINTER                               \
-                    "' that required a new size of '"            \
-                    "%d"                                         \
-                    "' using realloc.\n", (int) (__ZNG_SIZE));   \
-  } else {                                                       \
-    __ZNG_POINTER = __zng_temp_ptr;                              \
-  }                                                              \
+#define REALLOCATE(__ZNG_TYPE, __ZNG_POINTER, __ZNG_NEW_SIZE)        \
+do {                                                                 \
+  __ZNG_TYPE* __zng_temp_ptr =                                       \
+      (__ZNG_TYPE *) realloc((__ZNG_POINTER),                        \
+                             (__ZNG_NEW_SIZE) * sizeof(__ZNG_TYPE)); \
+  if (__zng_temp_ptr == NULL) {                                      \
+    fprintf(stderr, "ERROR: Error reallocating memory. "             \
+                    "Could not reallocate memory of type '"          \
+                    #__ZNG_TYPE                                      \
+                    "' for the variable '"                           \
+                    #__ZNG_POINTER                                   \
+                    "' that required a new size of '"                \
+                    "%d"                                             \
+                    "' using realloc().\n", (int) (__ZNG_NEW_SIZE)); \
+  } else {                                                           \
+    __ZNG_POINTER = __zng_temp_ptr;                                  \
+  }                                                                  \
 } while (0)
 
-#define DEALLOCATE(__ZNG_POINTER) \
-do {                              \
-  if ((__ZNG_POINTER) != NULL) {  \
-    free((__ZNG_POINTER));        \
-    (__ZNG_POINTER) = NULL;       \
-  }                               \
+#define DEALLOCATE(__ZNG_POINTER)                                   \
+do {                                                                \
+  if ((__ZNG_POINTER) != NULL) {                                    \
+    free((__ZNG_POINTER));                                          \
+    (__ZNG_POINTER) = NULL;                                         \
+  } else {                                                          \
+    fprintf(stderr, "WARNING: Attempt to deallocate NULL pointer '" \
+                    #__ZNG_POINTER                                  \
+                    "' using free().\n");                           \
+  }                                                                 \
 } while (0)
 
 #endif // __ZNG_MEMORY_H__

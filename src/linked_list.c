@@ -63,33 +63,6 @@ linked_list* allocate_copy_linked_list(const linked_list*const list) {
   return copy;
 }
 
-void deallocate_elements_in_linked_list(linked_list* list) {
-  if (list == NULL) {
-    return;
-  }
-
-  linked_list_node* node;
-  linked_list_node* next;
-
-  for (node = list->head; node != NULL; node = next) {
-    next = node->next;
-    DEALLOCATE(node);
-  }
-
-  list->head = NULL;
-  list->tail = NULL;
-  list->size = 0;
-}
-
-inline void deallocate_linked_list(linked_list* list) {
-  if (list == NULL) {
-    return;
-  }
-
-  deallocate_elements_in_linked_list(list);
-  DEALLOCATE(list);
-}
-
 inline bool is_null_or_empty_linked_list(const linked_list*const list) {
   return list == NULL
       || (list->head == NULL
@@ -105,7 +78,10 @@ inline bool is_empty_linked_list(const linked_list*const list) {
 }
 
 void print_linked_list(const linked_list*const list) {
-  if (is_empty_linked_list(list)) {
+  if (list == NULL) {
+    printf("list = NULL\n");
+    return;
+  } else if (is_empty_linked_list(list)) {
     printf("list = {}\n");
     return;
   }
@@ -116,10 +92,7 @@ void print_linked_list(const linked_list*const list) {
   while (head != NULL) {
     printf("%d", head->value);
     head = head->next;
-
-    if (head != NULL) {
-      printf("}->{");
-    }
+    printf("}->{");
   }
 
   printf("}\n");
@@ -143,9 +116,11 @@ bool exist_in_linked_list(const linked_list*const list, int value) {
   return false;
 }
 
-// TODO: Fix edge case when list is not NULL, but its head and tail are.
 inline void add_to_linked_list(linked_list*const list, int value) {
   if (list == NULL) {
+    return;
+  } else if (is_empty_linked_list(list)) {
+    //add_to_empty_linked_list(list, value);
     return;
   }
 
@@ -156,7 +131,25 @@ inline void add_to_linked_list(linked_list*const list, int value) {
   list->size++;
 }
 
-void delete_first_match_linked_list(linked_list* list, int target) {
+void delete_all_elements_linked_list(linked_list*const list) {
+  if (list == NULL) {
+    return;
+  }
+
+  linked_list_node* node;
+  linked_list_node* next;
+
+  for (node = list->head; node != NULL; node = next) {
+    next = node->next;
+    DEALLOCATE(node);
+  }
+
+  list->head = NULL;
+  list->tail = NULL;
+  list->size = 0;
+}
+
+void delete_first_match_linked_list(linked_list*const list, int target) {
   if (is_null_or_empty_linked_list(list)) {
     return;
   }
@@ -244,3 +237,12 @@ bool are_equal_linked_list(
 }
 
 //void sort_linked_list(linked_list*const list) {}
+
+inline void deallocate_linked_list(linked_list* list) {
+  if (list == NULL) {
+    return;
+  }
+
+  delete_all_elements_linked_list(list);
+  DEALLOCATE(list);
+}
