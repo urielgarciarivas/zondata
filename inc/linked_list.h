@@ -37,7 +37,6 @@ typedef struct __zng_ll {
 extern linked_list* allocate_linked_list(int value);
 extern linked_list* allocate_preset_linked_list(int size, int value);
 extern linked_list* allocate_empty_linked_list();
-// By making a copy, deleting that copy is also necessary.
 extern linked_list* allocate_copy_linked_list(const linked_list*const list);
 
 extern bool is_null_or_empty_linked_list(const linked_list*const list);
@@ -57,7 +56,6 @@ extern void add_as_tail_linked_list(linked_list*const list, int value);
 
 // TODO:
 extern void delete_all_elements_linked_list(linked_list*const list);
-// Deletes first occurence of 'target' in the linked list. It frees its memory.
 extern void delete_first_match_linked_list(linked_list*const list, int target);
 extern void delete_all_match_linked_list(linked_list*const list, int target);
 extern void delete_head_linked_list(linked_list*const list);

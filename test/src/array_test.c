@@ -23,8 +23,8 @@ TEST(ArrayAllocation, simple_allocation) {
   const int element = 15;
   array* arr = allocate_array(element);
 
-  EXPECT_TRUE(arr != NULL);
-  EXPECT_TRUE(arr->data != NULL);
+  EXPECT_DIFFERENT(arr, NULL);
+  EXPECT_DIFFERENT(arr->data, NULL);
   EXPECT_EQUAL(arr->size, 1);
   EXPECT_EQUAL(arr->data[0], element);
 
@@ -36,7 +36,7 @@ TEST(ArrayAllocation, preset_allocation) {
   const int value = 27;
   array* arr = allocate_preset_array(size, value);
 
-  EXPECT_TRUE(arr != NULL);
+  EXPECT_DIFFERENT(arr, NULL);
   EXPECT_EQUAL(arr->size, size);
 
   for (size_t i = 0; i < arr->size; ++i) {
@@ -49,7 +49,7 @@ TEST(ArrayAllocation, preset_allocation) {
 TEST(ArrayAllocation, empty_allocation) {
   array* arr = allocate_empty_array();
 
-  EXPECT_TRUE(arr != NULL);
+  EXPECT_DIFFERENT(arr, NULL);
   EXPECT_EQUAL(arr->size, 0);
   EXPECT_EQUAL(arr->data, NULL);
 
@@ -62,7 +62,9 @@ TEST(ArrayAllocation, copy_allocation) {
   array* arr = allocate_preset_array(size, value);
   array* arr_copy = allocate_copy_array(arr);
 
-  EXPECT_TRUE(arr != NULL && arr_copy != NULL);
+  EXPECT_DIFFERENT(arr, NULL);
+  EXPECT_DIFFERENT(arr_copy, NULL);
+  EXPECT_EQUAL(arr_copy->size, size);
   EXPECT_EQUAL(arr->size, arr_copy->size);
 
   for (size_t i = 0; i < arr->size; ++i) {
@@ -84,7 +86,7 @@ TEST(ArrayManipulation, adding_elements) {
     add_to_array(arr, i);
   }
 
-  EXPECT_TRUE(arr->data != NULL);
+  EXPECT_DIFFERENT(arr->data, NULL);
   EXPECT_EQUAL(arr->size, size);
 
   for (int i = 0; i < (int) size; ++i) {
@@ -103,6 +105,7 @@ TEST(ArrayAlgorithm, check_if_exists) {
 
   EXPECT_TRUE(exist_in_array(arr, 0));
   EXPECT_TRUE(exist_in_array(arr, arr->size / 2));
+  EXPECT_TRUE(exist_in_array(arr, arr->size - 1));
   EXPECT_FALSE(exist_in_array(arr, arr->size));
 
   deallocate_array(arr);

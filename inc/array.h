@@ -31,7 +31,6 @@ typedef struct __zng_array {
 extern array* allocate_array(int value);
 extern array* allocate_preset_array(int size, int value);
 extern array* allocate_empty_array();
-// By making a copy, deleting that copy is also necessary.
 extern array* allocate_copy_array(const array*const list);
 
 extern bool is_null_or_empty_array(const array*const arr);
