@@ -17,14 +17,13 @@
  */
 
 #include "../../inc/sort_map.h"
-#include "../deps/zontest/comparators.h"
+#include "../deps/zontest/test.h"
+
+TEST(SortMapTest, all_tests) {
+  EXPECT_TRUE(1);
+}
 
 int main(void) {
-  START_TEST("sort_map_test");
-
-  EXPECT_TRUE(1);
-
-  FINISH_TEST();
-
-  return test_result();
+  RUN_TESTS("SortMapTest");
+  return TEST_RESULT();
 }

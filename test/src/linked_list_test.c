@@ -17,11 +17,9 @@
  */
 
 #include "../../inc/linked_list.h"
-#include "../deps/zontest/comparators.h"
+#include "../deps/zontest/test.h"
 
-int main(void) {
-  START_TEST("linked_list_test");
-
+TEST(LinkedListTest, all_tests) {
   // length should not be >= INT_MAX.
   const size_t length = 5;
   const int first_element = 0;
@@ -53,17 +51,15 @@ int main(void) {
   linked_list_node* node;
   int curr_element = last_element;
 
-  print_linked_list(list);
-  print_linked_list(list_copy);
-
   for (node = list->head; node != NULL; node = node->next) {
     EXPECT_EQUAL(node->value, curr_element--);
   }
 
   deallocate_linked_list(list);
   deallocate_linked_list(list_copy);
+}
 
-  FINISH_TEST();
-
-  return test_result();
+int main(void) {
+  RUN_TESTS("LinkedListTest");
+  return TEST_RESULT();
 }

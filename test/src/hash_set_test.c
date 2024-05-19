@@ -17,14 +17,13 @@
  */
 
 #include "../../inc/hash_set.h"
-#include "../deps/zontest/comparators.h"
+#include "../deps/zontest/test.h"
+
+TEST(HashSetTest, all_tests) {
+  EXPECT_TRUE(1);
+}
 
 int main(void) {
-  START_TEST("hash_set_test");
-
-  EXPECT_TRUE(1);
-
-  FINISH_TEST();
-
-  return test_result();
+  RUN_TESTS("HashSetTest");
+  return TEST_RESULT();
 }

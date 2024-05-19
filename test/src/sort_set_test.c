@@ -17,25 +17,26 @@
  */
 
 #include "../../inc/sort_set.h"
-#include "../deps/zontest/comparators.h"
+#include "../deps/zontest/test.h"
 
-int main(void) {
-  START_TEST("sort_set_test");
-
+TEST(SortSetTest, all_tests) {
   const size_t len = 15;
   const int last_element = len - 1;
   const int first_element = 0;
-  sort_set* set = allocate_sort_set(1);
+  sort_set* set = allocate_sort_set(first_element);
 
-  EXPECT_TRUE(1);
+  EXPECT_EQUAL(set->size, 1);
+  EXPECT_TRUE(set->root != NULL);
+  EXPECT_EQUAL(set->root->value, first_element);
 
   for (int i = first_element + 1; i <= last_element; ++i) {
     //add_to_sort_set(set, i);
   }
 
   deallocate_sort_set(set);
+}
 
-  FINISH_TEST();
-
-  return test_result();
+int main(void) {
+  RUN_TESTS("SortSetTest");
+  return TEST_RESULT();
 }

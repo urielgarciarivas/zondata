@@ -17,14 +17,13 @@
  */
 
 #include "../../inc/hash_map.h"
-#include "../deps/zontest/comparators.h"
+#include "../deps/zontest/test.h"
+
+TEST(HashMapTest, all_tests) {
+  EXPECT_TRUE(1);
+}
 
 int main(void) {
-  START_TEST("hash_map_test");
-
-  EXPECT_TRUE(1);
-
-  FINISH_TEST();
-
-  return test_result();
+  RUN_TESTS("HashMapTest");
+  return TEST_RESULT();
 }
