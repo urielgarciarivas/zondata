@@ -22,12 +22,12 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-typedef struct __zng_ll_node {
+typedef struct __zng_linked_list_node {
   int value;
-  struct __zng_ll_node* next;
+  struct __zng_linked_list_node* next;
 } linked_list_node;
 
-typedef struct __zng_ll {
+typedef struct __zng_linked_list {
   size_t size;
   linked_list_node* head;
   linked_list_node* tail;
@@ -35,18 +35,18 @@ typedef struct __zng_ll {
 
 // Every new linked list needs to be deleted using deallocate_linked_list(...).
 extern linked_list* allocate_linked_list(int value);
-extern linked_list* allocate_preset_linked_list(int size, int value);
 extern linked_list* allocate_empty_linked_list();
+extern linked_list* allocate_preset_linked_list(int size, int value);
 extern linked_list* allocate_copy_linked_list(const linked_list*const list);
 
 extern bool is_null_or_empty_linked_list(const linked_list*const list);
 extern bool is_empty_linked_list(const linked_list*const list);
+extern bool exist_in_linked_list(const linked_list*const list, int value);
+extern bool are_equal_linked_list(
+    const linked_list*const lhs, const linked_list*const rhs);
 
 // Example output to screen: "list = {1}->{2}->{3}->{4}->{5}".
 extern void print_linked_list(const linked_list*const list);
-
-// Linear time, stops when finding the first occurence.
-extern bool exist_in_linked_list(const linked_list*const list, int value);
 
 extern void add_to_linked_list(linked_list*const list, int value);
 extern void add_to_empty_linked_list(linked_list*const list, int value);
@@ -55,20 +55,15 @@ extern void add_as_head_linked_list(linked_list*const list, int value);
 extern void add_as_tail_linked_list(linked_list*const list, int value);
 
 // TODO:
-extern void delete_all_elements_linked_list(linked_list*const list);
+extern void reverse_linked_list(linked_list*const list);
+extern void sort_linked_list(linked_list*const list);
+
+// TODO:
 extern void delete_first_match_linked_list(linked_list*const list, int target);
 extern void delete_all_match_linked_list(linked_list*const list, int target);
 extern void delete_head_linked_list(linked_list*const list);
 extern void delete_tail_linked_list(linked_list*const list);
-
-// Linear time.
-extern void reverse_linked_list(linked_list*const list);
-
-extern bool are_equal_linked_list(
-    const linked_list*const lhs, const linked_list*const rhs);
-
-extern void sort_linked_list(linked_list*const list);
-
+extern void delete_all_elements_linked_list(linked_list*const list);
 extern void deallocate_linked_list(linked_list* list);
 
 #endif // __ZNG_LINKED_LIST_H__

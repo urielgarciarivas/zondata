@@ -44,12 +44,6 @@ inline sort_set* allocate_empty_sort_set() {
   return response;
 }
 
-void delete_all_elements_sort_set(sort_set* set) {
-  if (set == NULL || set->root == NULL) {
-    return;
-  }
-}
-
 inline bool is_null_or_empty_sort_set(const sort_set*const set) {
   return set == NULL || (set->root == NULL && set->size == 0);
 }
@@ -78,6 +72,12 @@ bool exist_in_sort_set(const sort_set*const set, int target) {
   }
 
   return false;
+}
+
+void delete_all_elements_sort_set(sort_set* set) {
+  if (set == NULL || set->root == NULL) {
+    return;
+  }
 }
 
 void deallocate_sort_set(sort_set* set) {

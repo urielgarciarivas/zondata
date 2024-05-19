@@ -22,15 +22,15 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-typedef struct __zng_ss_node {
+typedef struct __zng_sort_set_node {
   int value;
   int left_depth;
   int right_depth;
-  struct __zng_ss_node* left;
-  struct __zng_ss_node* right;
+  struct __zng_sort_set_node* left;
+  struct __zng_sort_set_node* right;
 } sort_set_node;
 
-typedef struct __zng_ss {
+typedef struct __zng_sort_set {
   size_t size;
   sort_set_node* root;
 } sort_set;
@@ -43,13 +43,12 @@ extern bool is_empty_sort_set(const sort_set*const set);
 extern void add_to_sort_set(sort_set*const set, int value);
 extern void add_to_empty_sort_set(sort_set*const set, int value);
 
-// TODO:
-extern void delete_all_elements_sort_set(sort_set* list);
-
 // Time: O(log(n))
 // Space: O(1)
 extern bool exist_in_sort_set(const sort_set*const set, int target);
 
+// TODO:
+extern void delete_all_elements_sort_set(sort_set* list);
 extern void deallocate_sort_set(sort_set* list);
 
 #endif // __ZNG_SORT_SET_H__

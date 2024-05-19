@@ -19,6 +19,28 @@
 #include "../../inc/sort_set.h"
 #include "../deps/zontest/test.h"
 
+TEST(SortSetAllocation, simple_allocation) {
+  const int element = 15;
+  sort_set* set = allocate_sort_set(element);
+
+  EXPECT_DIFFERENT(set, NULL);
+  EXPECT_DIFFERENT(set->root, NULL);
+  EXPECT_EQUAL(set->size, 1);
+  EXPECT_EQUAL(set->root->value, element);
+
+  deallocate_sort_set(set);
+}
+
+TEST(SortSetAllocation, empty_allocation) {
+  sort_set* set = allocate_empty_sort_set();
+
+  EXPECT_DIFFERENT(set, NULL);
+  EXPECT_EQUAL(set->size, 0);
+  EXPECT_EQUAL(set->root, NULL);
+
+  deallocate_sort_set(set);
+}
+
 TEST(SortSetTest, all_tests) {
   const size_t len = 15;
   const int last_element = len - 1;

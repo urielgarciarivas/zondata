@@ -29,28 +29,25 @@ typedef struct __zng_array {
 
 // Every new array needs to be deleted using deallocate_array(...).
 extern array* allocate_array(int value);
-extern array* allocate_preset_array(int size, int value);
 extern array* allocate_empty_array();
+extern array* allocate_preset_array(int size, int value);
 extern array* allocate_copy_array(const array*const list);
 
 extern bool is_null_or_empty_array(const array*const arr);
 extern bool is_empty_array(const array*const arr);
+extern bool exist_in_array(const array*const arr, int target);
+extern bool are_equal_array(const array*const lhs, const array*const rhs);
 
 extern void add_to_array(array*const arr, int value);
 extern void add_to_empty_array(array*const arr, int value);
 
-extern bool exist_in_array(const array*const arr, int target);
-
 // TODO:
-extern void delete_all_elements_array(array* arr);
-extern void delete_last_element_array(array* arr);
-
-// TODO
-// Linear time.
 extern void reverse_array(array*const list);
-extern bool are_equal_array(const array*const lhs, const array*const rhs);
 extern void sort_array(array*const list);
 
+// TODO:
+extern void delete_last_element_array(array* arr);
+extern void delete_all_elements_array(array* arr);
 extern void deallocate_array(array* arr);
 
 #endif // __ZNG_ARRAY_H__
