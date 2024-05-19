@@ -94,44 +94,29 @@ TEST(ArrayManipulation, adding_elements) {
   deallocate_array(arr);
 }
 
-TEST(ArrayTest, all_tests) {
-  const size_t length = 5;
-  const int first_element = 0;
-  const int last_element = length - 1;
-  array* arr = allocate_array(first_element);
-  EXPECT_EQUAL(arr->data[0], first_element);
+TEST(ArrayAlgorithm, check_if_exists) {
+  array* arr = allocate_preset_array(200, 0);
 
-  for (int i = first_element + 1; i <= last_element; ++i) {
-    add_to_array(arr, i);
+  for (int i = 0; i < (int) arr->size; ++i) {
+    arr->data[i] = i;
   }
 
-  EXPECT_TRUE(exist_in_array(arr, first_element + 2));
-  EXPECT_FALSE(exist_in_array(arr, last_element + 1));
-  EXPECT_EQUAL(arr->size, length);
+  EXPECT_TRUE(exist_in_array(arr, 0));
+  EXPECT_TRUE(exist_in_array(arr, arr->size / 2));
+  EXPECT_FALSE(exist_in_array(arr, arr->size));
 
+  deallocate_array(arr);
+}
+
+TEST(ArrayAlgorithm, check_equal) {
+  array* arr = allocate_preset_array(200, 0);
   array* arr_copy = allocate_copy_array(arr);
-  EXPECT_FALSE(are_equal_array(arr_copy, NULL));
+
   EXPECT_TRUE(are_equal_array(arr, arr_copy));
-
-/*
-  reverse_linked_list(list);
-  EXPECT_FALSE(equal_linked_list(list, list_copy));
-  reverse_linked_list(list_copy);
-  EXPECT_TRUE(equal_linked_list(list, list_copy));
-  EXPECT_TRUE(equal_linked_list(list_copy, list_copy));
-
-  erase_single_match_linked_list(list_copy, 3);
-  EXPECT_FALSE(exist_in_linked_list(list_copy, 3));
-  EXPECT_FALSE(equal_linked_list(list, list_copy));
-
-  linked_list_node* node;
-  int curr_element = last_element;
-
-  for (node = list->head; node != NULL; node = node->next) {
-    EXPECT_EQUAL(node->value, curr_element--);
-  }
-
-*/
+  add_to_array(arr, 1);
+  EXPECT_FALSE(are_equal_array(arr, arr_copy));
+  add_to_array(arr_copy, 1);
+  EXPECT_TRUE(are_equal_array(arr, arr_copy));
 
   deallocate_array(arr);
   deallocate_array(arr_copy);

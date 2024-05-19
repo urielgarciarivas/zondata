@@ -19,6 +19,30 @@
 #include "../../inc/linked_list.h"
 #include "../deps/zontest/test.h"
 
+TEST(LinkedListAllocation, simple_allocation) {
+  const int element = 15;
+  linked_list* list = allocate_linked_list(element);
+
+  EXPECT_TRUE(list != NULL);
+  EXPECT_TRUE(list->head != NULL);
+  EXPECT_TRUE(list->tail != NULL);
+  EXPECT_EQUAL(list->size, 1);
+  EXPECT_EQUAL(list->head->value, element);
+
+  deallocate_linked_list(list);
+}
+
+TEST(LinkedListAllocation, empty_allocation) {
+  linked_list* list = allocate_empty_linked_list();
+
+  EXPECT_TRUE(list != NULL);
+  EXPECT_EQUAL(list->size, 0);
+  EXPECT_EQUAL(list->head, NULL);
+  EXPECT_EQUAL(list->tail, NULL);
+
+  deallocate_linked_list(list);
+}
+
 TEST(LinkedListTest, all_tests) {
   // length should not be >= INT_MAX.
   const size_t length = 5;
