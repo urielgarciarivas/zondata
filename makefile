@@ -47,11 +47,9 @@ $(BIN_DIR)/%_test: $(SRC_DIR)/%_test.c $(OBJ_DIR)/%.o
 all: $(OBJ)
 
 # Automatic rule to run all tests in BIN.
-# Stop if one test fails.
 test: $(BIN)
 	for test_binary in $(BIN); do \
 		./$$test_binary; \
-		[[ $$? -ne 0 ]] && break; \
 	done; \
 	make clean
 

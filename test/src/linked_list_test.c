@@ -17,11 +17,33 @@
  */
 
 #include "../../inc/linked_list.h"
-#include "../deps/zontest/comparators.h"
+#include "../deps/zontest/test.h"
 
-int main(void) {
-  START_TEST("linked_list_test");
+TEST(LinkedListAllocation, simple_allocation) {
+  const int element = 15;
+  linked_list* list = allocate_linked_list(element);
 
+  EXPECT_TRUE(list != NULL);
+  EXPECT_TRUE(list->head != NULL);
+  EXPECT_TRUE(list->tail != NULL);
+  EXPECT_EQUAL(list->size, 1);
+  EXPECT_EQUAL(list->head->value, element);
+
+  deallocate_linked_list(list);
+}
+
+TEST(LinkedListAllocation, empty_allocation) {
+  linked_list* list = allocate_empty_linked_list();
+
+  EXPECT_TRUE(list != NULL);
+  EXPECT_EQUAL(list->size, 0);
+  EXPECT_EQUAL(list->head, NULL);
+  EXPECT_EQUAL(list->tail, NULL);
+
+  deallocate_linked_list(list);
+}
+
+TEST(LinkedListTest, all_tests) {
   // length should not be >= INT_MAX.
   const size_t length = 5;
   const int first_element = 0;
@@ -53,17 +75,15 @@ int main(void) {
   linked_list_node* node;
   int curr_element = last_element;
 
-  print_linked_list(list);
-  print_linked_list(list_copy);
-
   for (node = list->head; node != NULL; node = node->next) {
     EXPECT_EQUAL(node->value, curr_element--);
   }
 
   deallocate_linked_list(list);
   deallocate_linked_list(list_copy);
+}
 
-  FINISH_TEST();
-
+int main(void) {
+  RUN_TESTS("LinkedListTest");
   return TEST_RESULT();
 }

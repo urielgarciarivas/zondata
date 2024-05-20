@@ -44,30 +44,12 @@ inline sort_set* allocate_empty_sort_set() {
   return response;
 }
 
-void deallocate_elements_in_sort_set(sort_set* set) {
-  if (set == NULL || set->root == NULL) {
-    return;
-  }
-
-
-}
-
-void deallocate_sort_set(sort_set* set) {
-  if (set == NULL) {
-    return;
-  }
-
-  if (set->root != NULL) {
-    deallocate_elements_in_sort_set(set);
-  }
-
-  DEALLOCATE(set);
+inline bool is_null_or_empty_sort_set(const sort_set*const set) {
+  return set == NULL || (set->root == NULL && set->size == 0);
 }
 
 inline bool is_empty_sort_set(const sort_set*const set) {
-  return set == NULL
-      || (set->root == NULL
-       && set->size == 0);
+  return set != NULL && set->root == NULL && set->size == 0;
 }
 
 //inline void add_to_sort_set(sort_set*const set, int value) { set; }
@@ -90,4 +72,22 @@ bool exist_in_sort_set(const sort_set*const set, int target) {
   }
 
   return false;
+}
+
+void delete_all_elements_sort_set(sort_set* set) {
+  if (set == NULL || set->root == NULL) {
+    return;
+  }
+}
+
+void deallocate_sort_set(sort_set* set) {
+  if (set == NULL) {
+    return;
+  }
+
+  if (set->root != NULL) {
+    delete_all_elements_sort_set(set);
+  }
+
+  DEALLOCATE(set);
 }

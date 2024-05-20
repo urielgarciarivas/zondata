@@ -63,33 +63,6 @@ linked_list* allocate_copy_linked_list(const linked_list*const list) {
   return copy;
 }
 
-void deallocate_elements_in_linked_list(linked_list* list) {
-  if (list == NULL) {
-    return;
-  }
-
-  linked_list_node* node;
-  linked_list_node* next;
-
-  for (node = list->head; node != NULL; node = next) {
-    next = node->next;
-    DEALLOCATE(node);
-  }
-
-  list->head = NULL;
-  list->tail = NULL;
-  list->size = 0;
-}
-
-inline void deallocate_linked_list(linked_list* list) {
-  if (list == NULL) {
-    return;
-  }
-
-  deallocate_elements_in_linked_list(list);
-  DEALLOCATE(list);
-}
-
 inline bool is_null_or_empty_linked_list(const linked_list*const list) {
   return list == NULL
       || (list->head == NULL
@@ -102,27 +75,6 @@ inline bool is_empty_linked_list(const linked_list*const list) {
       && list->head == NULL
       && list->tail == NULL
       && list->size == 0;
-}
-
-void print_linked_list(const linked_list*const list) {
-  if (is_empty_linked_list(list)) {
-    printf("list = {}\n");
-    return;
-  }
-
-  linked_list_node* head = list->head;
-  printf("list = {");
-
-  while (head != NULL) {
-    printf("%d", head->value);
-    head = head->next;
-
-    if (head != NULL) {
-      printf("}->{");
-    }
-  }
-
-  printf("}\n");
 }
 
 bool exist_in_linked_list(const linked_list*const list, int value) {
@@ -143,9 +95,59 @@ bool exist_in_linked_list(const linked_list*const list, int value) {
   return false;
 }
 
-// TODO: Fix edge case when list is not NULL, but its head and tail are.
+bool are_equal_linked_list(
+    const linked_list*const lhs, const linked_list*const rhs) {
+  if (lhs == NULL && rhs == NULL) {
+    return true;
+  } else if (is_empty_linked_list(lhs) && is_empty_linked_list(rhs)) {
+    return true;
+  } else if (is_null_or_empty_linked_list(lhs)
+          || is_null_or_empty_linked_list(rhs)
+          || lhs->size != rhs->size) {
+    return false;
+  }
+
+  linked_list_node* lhs_node = lhs->head;
+  linked_list_node* rhs_node = rhs->head;
+
+  while (lhs_node != NULL && rhs_node != NULL) {
+    if (lhs_node->value != rhs_node->value) {
+      return false;
+    }
+
+    lhs_node = lhs_node->next;
+    rhs_node = rhs_node->next;
+  }
+
+  return lhs_node == NULL && rhs_node == NULL;
+}
+
+void print_linked_list(const linked_list*const list) {
+  if (list == NULL) {
+    printf("list = NULL\n");
+    return;
+  } else if (is_empty_linked_list(list)) {
+    printf("list = {}\n");
+    return;
+  }
+
+  linked_list_node* head = list->head;
+  printf("list = {");
+
+  while (head != NULL) {
+    printf("%d", head->value);
+    head = head->next;
+    printf("}->{");
+  }
+
+  printf("}\n");
+}
+
 inline void add_to_linked_list(linked_list*const list, int value) {
   if (list == NULL) {
+    return;
+  } else if (is_empty_linked_list(list)) {
+    //add_to_empty_linked_list(list, value);
     return;
   }
 
@@ -156,7 +158,32 @@ inline void add_to_linked_list(linked_list*const list, int value) {
   list->size++;
 }
 
-void delete_first_match_linked_list(linked_list* list, int target) {
+//void erase_all_match_linked_list(linked_list* list, int target) {}
+
+void reverse_linked_list(linked_list*const list) {
+  if (is_null_or_empty_linked_list(list)) {
+    return;
+  }
+
+  linked_list_node* current = list->head;
+  linked_list_node* previous = NULL;       
+  linked_list_node* next = NULL;
+
+  while (current != NULL) {
+    next = current->next;
+    current->next = previous;
+    previous = current;
+    current = next;
+  }
+
+  current = list->head;
+  list->head = list->tail;
+  list->tail = current;
+}
+
+//void sort_linked_list(linked_list*const list) {}
+
+void delete_first_match_linked_list(linked_list*const list, int target) {
   if (is_null_or_empty_linked_list(list)) {
     return;
   }
@@ -193,54 +220,29 @@ void delete_first_match_linked_list(linked_list* list, int target) {
   }
 }
 
-//void erase_all_match_linked_list(linked_list* list, int target) {}
-
-void reverse_linked_list(linked_list*const list) {
-  if (is_null_or_empty_linked_list(list)) {
+void delete_all_elements_linked_list(linked_list*const list) {
+  if (list == NULL) {
     return;
   }
 
-  linked_list_node* current = list->head;
-  linked_list_node* previous = NULL;       
-  linked_list_node* next = NULL;
+  linked_list_node* node;
+  linked_list_node* next;
 
-  while (current != NULL) {
-    next = current->next;
-    current->next = previous;
-    previous = current;
-    current = next;
+  for (node = list->head; node != NULL; node = next) {
+    next = node->next;
+    DEALLOCATE(node);
   }
 
-  current = list->head;
-  list->head = list->tail;
-  list->tail = current;
+  list->head = NULL;
+  list->tail = NULL;
+  list->size = 0;
 }
 
-bool are_equal_linked_list(
-    const linked_list*const lhs, const linked_list*const rhs) {
-  if (lhs == NULL && rhs == NULL) {
-    return true;
-  } else if (is_empty_linked_list(lhs) && is_empty_linked_list(rhs)) {
-    return true;
-  } else if (is_null_or_empty_linked_list(lhs)
-          || is_null_or_empty_linked_list(rhs)
-          || lhs->size != rhs->size) {
-    return false;
+inline void deallocate_linked_list(linked_list* list) {
+  if (list == NULL) {
+    return;
   }
 
-  linked_list_node* lhs_node = lhs->head;
-  linked_list_node* rhs_node = rhs->head;
-
-  while (lhs_node != NULL && rhs_node != NULL) {
-    if (lhs_node->value != rhs_node->value) {
-      return false;
-    }
-
-    lhs_node = lhs_node->next;
-    rhs_node = rhs_node->next;
-  }
-
-  return lhs_node == NULL && rhs_node == NULL;
+  delete_all_elements_linked_list(list);
+  DEALLOCATE(list);
 }
-
-//void sort_linked_list(linked_list*const list) {}
