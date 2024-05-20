@@ -96,7 +96,7 @@ TEST(ArrayManipulation, adding_elements) {
   deallocate_array(arr);
 }
 
-TEST(ArrayAlgorithm, check_if_exists) {
+TEST(ArrayVerification, check_if_exists) {
   array* arr = allocate_preset_array(200, 0);
 
   for (int i = 0; i < (int) arr->size; ++i) {
@@ -111,7 +111,7 @@ TEST(ArrayAlgorithm, check_if_exists) {
   deallocate_array(arr);
 }
 
-TEST(ArrayAlgorithm, check_equal) {
+TEST(ArrayVerification, check_equal) {
   array* arr = allocate_preset_array(200, 0);
   array* arr_copy = allocate_copy_array(arr);
 
