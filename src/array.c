@@ -19,6 +19,9 @@
 #include "../inc/array.h"
 #include "../inc/memory.h"
 
+// Forward declarations to follow array.h's order.
+void delete_all_elements_array(array*const arr);
+
 inline array* allocate_array(int value) {
   array* response;
 
@@ -145,15 +148,24 @@ inline void add_to_empty_array(array*const arr, int value) {
 
 //extern void sort_array(array*const list);
 
-inline void delete_all_elements_array(array* arr) {
+inline void delete_last_element_array(array*const arr) {
+  if (is_null_or_empty_array(arr)) {
+    return;
+  } else if (arr->size == 1) {
+    delete_all_elements_array(arr);
+    return;
+  }
+
+  arr->size--;
+  REALLOCATE(int, arr->data, arr->size);
+}
+
+inline void delete_all_elements_array(array*const arr) {
   if (arr == NULL) {
     return;
   }
 
-  if (arr->data != NULL) {
-    DEALLOCATE(arr->data);
-  }
-
+  DEALLOCATE(arr->data);
   arr->size = 0;
 }
 

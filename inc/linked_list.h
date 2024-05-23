@@ -53,6 +53,8 @@ extern void add_to_empty_linked_list(linked_list*const list, int value);
 // TODO: Finish head and tail functions.
 extern void add_as_head_linked_list(linked_list*const list, int value);
 extern void add_as_tail_linked_list(linked_list*const list, int value);
+extern void append_to_linked_list(
+    linked_list*const list, const linked_list*const append);
 
 // TODO:
 extern void reverse_linked_list(linked_list*const list);

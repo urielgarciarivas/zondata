@@ -5,17 +5,17 @@ C data structures. From hash maps to linked lists.
 ### Object files
 
 ```
-$ make
+make
 ```
 
 ### Build and run tests
 
 ```
-$ make test
+make test
 ```
 
 ### Delete generated files
 
 ```
-$ make clean
+make clean
 ```
