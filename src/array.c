@@ -165,7 +165,10 @@ inline void delete_all_elements_array(array*const arr) {
     return;
   }
 
-  DEALLOCATE(arr->data);
+  if (arr->data != NULL) {
+    DEALLOCATE(arr->data);
+  }
+
   arr->size = 0;
 }
 
