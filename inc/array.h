@@ -40,14 +40,16 @@ extern bool are_equal_array(const array*const lhs, const array*const rhs);
 
 extern void add_to_array(array*const arr, int value);
 extern void add_to_empty_array(array*const arr, int value);
+extern void append_to_array(array*const arr, const array*const append);
 
 // TODO:
 extern void reverse_array(array*const list);
 extern void sort_array(array*const list);
 
 // TODO:
-extern void delete_last_element_array(array* arr);
-extern void delete_all_elements_array(array* arr);
+extern void delete_first_match_array(array*const arr);
+extern void delete_last_element_array(array*const arr);
+extern void delete_all_elements_array(array*const arr);
 extern void deallocate_array(array* arr);
 
 #endif // __ZNG_ARRAY_H__

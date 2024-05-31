@@ -75,6 +75,37 @@ TEST(ArrayAllocation, copy_allocation) {
   deallocate_array(arr_copy);
 }
 
+TEST(ArrayVerification, check_if_exists) {
+  array* arr = allocate_preset_array(200, 0);
+
+  for (int i = 0; i < (int) arr->size; ++i) {
+    arr->data[i] = i;
+  }
+
+  EXPECT_TRUE(exist_in_array(arr, 0));
+  EXPECT_TRUE(exist_in_array(arr, arr->size / 2));
+  EXPECT_TRUE(exist_in_array(arr, arr->size - 1));
+  EXPECT_FALSE(exist_in_array(arr, arr->size));
+
+  deallocate_array(arr);
+}
+
+TEST(ArrayVerification, check_equal) {
+  array* arr = allocate_preset_array(200, 0);
+  array* arr_copy = allocate_copy_array(arr);
+
+  EXPECT_TRUE(are_equal_array(arr, arr));
+  EXPECT_TRUE(are_equal_array(arr, arr_copy));
+  EXPECT_TRUE(are_equal_array(arr_copy, arr_copy));
+  add_to_array(arr, 1);
+  EXPECT_FALSE(are_equal_array(arr, arr_copy));
+  add_to_array(arr_copy, 1);
+  EXPECT_TRUE(are_equal_array(arr, arr_copy));
+
+  deallocate_array(arr);
+  deallocate_array(arr_copy);
+}
+
 TEST(ArrayManipulation, adding_elements) {
   const size_t size = 100;
   array* arr = allocate_empty_array();
@@ -94,35 +125,6 @@ TEST(ArrayManipulation, adding_elements) {
   }
 
   deallocate_array(arr);
-}
-
-TEST(ArrayAlgorithm, check_if_exists) {
-  array* arr = allocate_preset_array(200, 0);
-
-  for (int i = 0; i < (int) arr->size; ++i) {
-    arr->data[i] = i;
-  }
-
-  EXPECT_TRUE(exist_in_array(arr, 0));
-  EXPECT_TRUE(exist_in_array(arr, arr->size / 2));
-  EXPECT_TRUE(exist_in_array(arr, arr->size - 1));
-  EXPECT_FALSE(exist_in_array(arr, arr->size));
-
-  deallocate_array(arr);
-}
-
-TEST(ArrayAlgorithm, check_equal) {
-  array* arr = allocate_preset_array(200, 0);
-  array* arr_copy = allocate_copy_array(arr);
-
-  EXPECT_TRUE(are_equal_array(arr, arr_copy));
-  add_to_array(arr, 1);
-  EXPECT_FALSE(are_equal_array(arr, arr_copy));
-  add_to_array(arr_copy, 1);
-  EXPECT_TRUE(are_equal_array(arr, arr_copy));
-
-  deallocate_array(arr);
-  deallocate_array(arr_copy);
 }
 
 int main(void) {

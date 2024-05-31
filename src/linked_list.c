@@ -45,19 +45,31 @@ inline linked_list* allocate_empty_linked_list() {
   return response;
 }
 
-linked_list* allocate_copy_linked_list(const linked_list*const list) {
-  if (list == NULL) {
+linked_list* allocate_preset_linked_list(int size, int value) {
+  linked_list* response = allocate_empty_linked_list();
+
+  while (size--) {
+    add_to_linked_list(response, value);
+  }
+
+  return response;
+}
+
+linked_list* allocate_copy_linked_list(const linked_list*const original) {
+  if (original == NULL) {
     return NULL;
-  } else if (is_empty_linked_list(list)) {
+  } else if (is_empty_linked_list(original)) {
     return allocate_empty_linked_list();
   }
 
-  linked_list* copy = allocate_linked_list(list->head->value);
-  linked_list_node* node = list->head->next;
+  linked_list* copy = allocate_preset_linked_list(original->size, 0);
+  linked_list_node* original_node = original->head;
+  linked_list_node* copy_node = copy->head;
 
-  while (node != NULL) {
-    add_to_linked_list(copy, node->value);
-    node = node->next;
+  while (original_node != NULL) {
+    copy_node->value = original_node->value;
+    original_node = original_node->next;
+    copy_node = copy_node->next;
   }
 
   return copy;
@@ -143,11 +155,23 @@ void print_linked_list(const linked_list*const list) {
   printf("}\n");
 }
 
+inline void add_to_empty_linked_list(linked_list*const list, int value) {
+  if (list == NULL || !is_empty_linked_list(list)) {
+    return;
+  }
+
+  ALLOCATE(linked_list_node, list->head);
+  list->size = 1;
+  list->head->value = value;
+  list->head->next = NULL;
+  list->tail = list->head;
+}
+
 inline void add_to_linked_list(linked_list*const list, int value) {
   if (list == NULL) {
     return;
   } else if (is_empty_linked_list(list)) {
-    //add_to_empty_linked_list(list, value);
+    add_to_empty_linked_list(list, value);
     return;
   }
 

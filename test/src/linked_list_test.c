@@ -23,9 +23,9 @@ TEST(LinkedListAllocation, simple_allocation) {
   const int element = 15;
   linked_list* list = allocate_linked_list(element);
 
-  EXPECT_TRUE(list != NULL);
-  EXPECT_TRUE(list->head != NULL);
-  EXPECT_TRUE(list->tail != NULL);
+  EXPECT_DIFFERENT(list, NULL);
+  EXPECT_DIFFERENT(list->head, NULL);
+  EXPECT_DIFFERENT(list->tail, NULL);
   EXPECT_EQUAL(list->size, 1);
   EXPECT_EQUAL(list->head->value, element);
 
@@ -35,10 +35,94 @@ TEST(LinkedListAllocation, simple_allocation) {
 TEST(LinkedListAllocation, empty_allocation) {
   linked_list* list = allocate_empty_linked_list();
 
-  EXPECT_TRUE(list != NULL);
+  EXPECT_DIFFERENT(list, NULL);
   EXPECT_EQUAL(list->size, 0);
   EXPECT_EQUAL(list->head, NULL);
   EXPECT_EQUAL(list->tail, NULL);
+
+  deallocate_linked_list(list);
+}
+
+TEST(LinkedListAllocation, preset_allocation) {
+  const size_t size = 100;
+  const int value = 27;
+  linked_list* list = allocate_preset_linked_list(size, value);
+
+  EXPECT_DIFFERENT(list, NULL);
+  EXPECT_DIFFERENT(list->head, NULL);
+  EXPECT_DIFFERENT(list->tail, NULL);
+  EXPECT_DIFFERENT(list->head, list->tail);
+  EXPECT_EQUAL(list->size, size);
+
+  for (linked_list_node* i = list->head; i != NULL; i = i->next) {
+    EXPECT_EQUAL(i->value, value);
+  }
+
+  deallocate_linked_list(list);
+}
+
+TEST(LinkedListAllocation, copy_allocation) {
+  const size_t size = 100;
+  linked_list* original_list = allocate_preset_linked_list(size, 0);
+  linked_list_node* original_node;
+
+  EXPECT_DIFFERENT(original_list, NULL);
+  EXPECT_DIFFERENT(original_list->head, NULL);
+  EXPECT_DIFFERENT(original_list->tail, NULL);
+  EXPECT_DIFFERENT(original_list->head, original_list->tail);
+  EXPECT_EQUAL(original_list->size, size);
+
+  original_node = original_list->head;
+
+  for (size_t i = 0; i < size; ++i) {
+    original_node->value = i * 10000;
+    original_node = original_node->next;
+  }
+
+  linked_list* copy_list = allocate_copy_linked_list(original_list);
+  linked_list_node* copy_node;
+
+  EXPECT_DIFFERENT(copy_list, NULL);
+  EXPECT_DIFFERENT(copy_list->head, NULL);
+  EXPECT_DIFFERENT(copy_list->tail, NULL);
+  EXPECT_DIFFERENT(copy_list->head, original_list->tail);
+  EXPECT_EQUAL(copy_list->size, size);
+
+  for (original_node = original_list->head, copy_node = copy_list->head;
+      original_node != NULL && copy_node != NULL;
+      original_node = original_node->next, copy_node = copy_node->next) {
+    EXPECT_EQUAL(original_node->value, copy_node->value);
+  }
+
+  deallocate_linked_list(original_list);
+  deallocate_linked_list(copy_list);
+}
+
+TEST(LinkedListAlgorithm, reverse_list) {
+  const size_t size = 100;
+  linked_list* list = allocate_preset_linked_list(size, 0);
+  linked_list_node* node;
+
+  node = list->head;
+
+  for (int i = 0; i <  (int) size; ++i) {
+    node->value = i;
+    node = node->next;
+  }
+
+  reverse_linked_list(list);
+  EXPECT_DIFFERENT(list, NULL);
+  EXPECT_DIFFERENT(list->head, NULL);
+  EXPECT_DIFFERENT(list->tail, NULL);
+  EXPECT_DIFFERENT(list->head, list->tail);
+  EXPECT_EQUAL(list->size, size);
+
+  node = list->head;
+
+  for (int i = size - 1; i >= 0; --i) {
+    EXPECT_EQUAL(node->value, i);
+    node = node->next;
+  }
 
   deallocate_linked_list(list);
 }
