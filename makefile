@@ -55,6 +55,7 @@ CFLAGS = $(CWARN_GENERAL) \
 	$(CWARN_SWITCH) \
 	$(CWARN_POINTERS) \
 	$(CWARN_OPTIMIZATION) \
+	$(CWARN_IMPLICIT) \
 	$(CWARN_OTHERS) \
 	-I./inc/ \
 	-I./test/deps/
