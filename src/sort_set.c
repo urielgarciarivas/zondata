@@ -34,7 +34,7 @@ inline sort_set* allocate_sort_set(int value) {
   return response;
 }
 
-inline sort_set* allocate_empty_sort_set() {
+inline sort_set* allocate_empty_sort_set(void) {
   sort_set* response;
 
   ALLOCATE(sort_set, response);
@@ -55,7 +55,7 @@ inline bool is_empty_sort_set(const sort_set*const set) {
 //inline void add_to_sort_set(sort_set*const set, int value) { set; }
 
 bool exist_in_sort_set(const sort_set*const set, int target) {
-  if (is_empty_sort_set(set)) {
+  if (is_null_or_empty_sort_set(set)) {
     return false;
   }
 
@@ -74,10 +74,14 @@ bool exist_in_sort_set(const sort_set*const set, int target) {
   return false;
 }
 
-void delete_all_elements_sort_set(sort_set* set) {
-  if (set == NULL || set->root == NULL) {
+void delete_all_elements_sort_set(sort_set_node* node) {
+  if (node == NULL) {
     return;
   }
+
+  delete_all_elements_sort_set(node->left);  
+  delete_all_elements_sort_set(node->right);
+  DEALLOCATE(node);  
 }
 
 void deallocate_sort_set(sort_set* set) {
@@ -86,7 +90,7 @@ void deallocate_sort_set(sort_set* set) {
   }
 
   if (set->root != NULL) {
-    delete_all_elements_sort_set(set);
+    delete_all_elements_sort_set(set->root);
   }
 
   DEALLOCATE(set);

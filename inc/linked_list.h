@@ -20,7 +20,7 @@
 #define __ZNG_LINKED_LIST_H__
 
 #include <stdbool.h>
-#include <stdlib.h>
+#include <stddef.h>
 
 typedef struct __zng_linked_list_node {
   int value;
@@ -35,8 +35,8 @@ typedef struct __zng_linked_list {
 
 // Every new linked list needs to be deleted using deallocate_linked_list(...).
 extern linked_list* allocate_linked_list(int value);
-extern linked_list* allocate_empty_linked_list();
-extern linked_list* allocate_preset_linked_list(int size, int value);
+extern linked_list* allocate_empty_linked_list(void);
+extern linked_list* allocate_preset_linked_list(size_t size, int value);
 extern linked_list* allocate_copy_linked_list(const linked_list*const list);
 
 extern bool is_null_or_empty_linked_list(const linked_list*const list);
