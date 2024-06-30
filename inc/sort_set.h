@@ -20,7 +20,7 @@
 #define __ZNG_SORT_SET_H__
 
 #include <stdbool.h>
-#include <stdlib.h>
+#include <stddef.h>
 
 typedef struct __zng_sort_set_node {
   int value;
@@ -36,8 +36,9 @@ typedef struct __zng_sort_set {
 } sort_set;
 
 extern sort_set* allocate_sort_set(int value);
-extern sort_set* allocate_empty_sort_set();
+extern sort_set* allocate_empty_sort_set(void);
 
+extern bool is_null_or_empty_sort_set(const sort_set*const set);
 extern bool is_empty_sort_set(const sort_set*const set);
 
 extern void add_to_sort_set(sort_set*const set, int value);
@@ -48,7 +49,7 @@ extern void add_to_empty_sort_set(sort_set*const set, int value);
 extern bool exist_in_sort_set(const sort_set*const set, int target);
 
 // TODO:
-extern void delete_all_elements_sort_set(sort_set* list);
+extern void delete_all_elements_sort_set(sort_set_node* node);
 extern void deallocate_sort_set(sort_set* list);
 
 #endif // __ZNG_SORT_SET_H__

@@ -34,7 +34,7 @@ inline linked_list* allocate_linked_list(int value) {
   return response;
 }
 
-inline linked_list* allocate_empty_linked_list() {
+inline linked_list* allocate_empty_linked_list(void) {
   linked_list* response;
 
   ALLOCATE(linked_list, response);
@@ -45,7 +45,7 @@ inline linked_list* allocate_empty_linked_list() {
   return response;
 }
 
-linked_list* allocate_preset_linked_list(int size, int value) {
+linked_list* allocate_preset_linked_list(size_t size, int value) {
   linked_list* response = allocate_empty_linked_list();
 
   while (size--) {
@@ -245,7 +245,7 @@ void delete_first_match_linked_list(linked_list*const list, int target) {
 }
 
 void delete_all_elements_linked_list(linked_list*const list) {
-  if (list == NULL) {
+  if (is_null_or_empty_linked_list(list)) {
     return;
   }
 

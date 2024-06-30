@@ -21,6 +21,7 @@
 
 // Forward declarations to follow array.h's order.
 void delete_all_elements_array(array*const arr);
+void add_to_empty_array(array*const arr, int value);
 
 inline array* allocate_array(int value) {
   array* response;
@@ -33,7 +34,7 @@ inline array* allocate_array(int value) {
   return response;
 }
 
-inline array* allocate_empty_array() {
+inline array* allocate_empty_array(void) {
   array* response;
 
   ALLOCATE(array, response);
@@ -43,10 +44,8 @@ inline array* allocate_empty_array() {
   return response;
 }
 
-inline array* allocate_preset_array(int size, int value) {
-  if (size < 0) {
-    return NULL;
-  } else if (size == 0) {
+inline array* allocate_preset_array(size_t size, int value) {
+  if (size == 0) {
     return allocate_empty_array();
   }
 
@@ -161,7 +160,7 @@ inline void delete_last_element_array(array*const arr) {
 }
 
 inline void delete_all_elements_array(array*const arr) {
-  if (arr == NULL) {
+  if (is_null_or_empty_array(arr)) {
     return;
   }
 

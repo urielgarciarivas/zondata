@@ -83,9 +83,9 @@ TEST(ArrayVerification, check_if_exists) {
   }
 
   EXPECT_TRUE(exist_in_array(arr, 0));
-  EXPECT_TRUE(exist_in_array(arr, arr->size / 2));
-  EXPECT_TRUE(exist_in_array(arr, arr->size - 1));
-  EXPECT_FALSE(exist_in_array(arr, arr->size));
+  EXPECT_TRUE(exist_in_array(arr, (int) arr->size / 2));
+  EXPECT_TRUE(exist_in_array(arr, (int) arr->size - 1));
+  EXPECT_FALSE(exist_in_array(arr, (int) arr->size));
 
   deallocate_array(arr);
 }
@@ -114,7 +114,7 @@ TEST(ArrayManipulation, adding_elements) {
   EXPECT_EQUAL(arr->size, 0);
 
   for (size_t i = 0; i < size; ++i) {
-    add_to_array(arr, i);
+    add_to_array(arr, (int) i);
   }
 
   EXPECT_DIFFERENT(arr->data, NULL);

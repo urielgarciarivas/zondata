@@ -75,7 +75,7 @@ TEST(LinkedListAllocation, copy_allocation) {
   original_node = original_list->head;
 
   for (size_t i = 0; i < size; ++i) {
-    original_node->value = i * 10000;
+    original_node->value = (int) i * 1000;
     original_node = original_node->next;
   }
 
@@ -119,7 +119,7 @@ TEST(LinkedListAlgorithm, reverse_list) {
 
   node = list->head;
 
-  for (int i = size - 1; i >= 0; --i) {
+  for (int i = (int) size - 1; i >= 0; --i) {
     EXPECT_EQUAL(node->value, i);
     node = node->next;
   }
@@ -131,7 +131,7 @@ TEST(LinkedListTest, all_tests) {
   // length should not be >= INT_MAX.
   const size_t length = 5;
   const int first_element = 0;
-  const int last_element = length - 1;
+  const int last_element = (int) length - 1;
   linked_list* list = allocate_linked_list(first_element);
 
   for (int i = first_element + 1; i <= last_element; ++i) {

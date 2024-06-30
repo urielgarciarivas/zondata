@@ -43,7 +43,7 @@ TEST(SortSetAllocation, empty_allocation) {
 
 TEST(SortSetTest, all_tests) {
   const size_t len = 15;
-  const int last_element = len - 1;
+  const int last_element = (int) len - 1;
   const int first_element = 0;
   sort_set* set = allocate_sort_set(first_element);
 

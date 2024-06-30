@@ -14,9 +14,47 @@
 #
 # https://github.com/zoningorg/zondata/blob/main/LICENSE
 
-# Compilation.
+# Compilation. Activate as many warnings as possible for maximum safety.
+# TODO: Include -Wredundant-decls -Wpadded
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -I./inc/ -I./test/deps
+CWARN_GENERAL = -Wall -Wextra -Werror -Wpedantic -Wconversion -Wformat=2 \
+	-Wshadow -Wundef -Wvla -Wwrite-strings -Wlogical-op -Wfloat-equal \
+	-Wpointer-arith -Winline -Wsystem-headers -Wchar-subscripts \
+	-Wdeprecated-declarations -Warray-bounds -Wduplicated-cond -Winit-self \
+	-Wduplicated-branches -Wlogical-not-parentheses -Wformat-security \
+	-Wformat-signedness -Wformat-zero-length -Wshadow=local \
+	-Wshadow=compatible-local -Wshadow=global -Werror=array-bounds \
+	-Wzero-length-bounds -Woverlength-strings
+CWARN_UNUSED = -Wunused -Wunused-parameter -Wunused-function -Wunused-label \
+	-Wunused-value -Wuninitialized -Wunused-variable -Wunused-macros \
+	-Wunused-local-typedefs -Wunused-const-variable
+CWARN_DECLARATIONS = -Wstrict-prototypes -Wold-style-definition \
+	-Wmissing-prototypes -Wmissing-declarations -Wmissing-field-initializers \
+	-Wmissing-include-dirs -Wnested-externs -Wmissing-format-attribute
+CWARN_SWITCH = -Wswitch-default -Wswitch-enum
+CWARN_POINTERS = -Wincompatible-pointer-types -Wcast-align -Wcast-qual \
+	-Wpointer-sign -Wrestrict -Wnull-dereference -Wuseless-cast -Wnonnull \
+	-Walloca -Wcast-align=strict -Wbad-function-cast -Wcast-function-type \
+	-Wstack-protector -Waddress
+CWARN_OPTIMIZATION = -Wdisabled-optimization -Wdouble-promotion \
+	-Wunsafe-loop-optimizations -Wunsuffixed-float-constants -Wfloat-conversion
+CWARN_IMPLICIT = -Wimplicit-int -Wimplicit-function-declaration \
+	-Wimplicit-fallthrough
+CWARN_OTHERS = -Wstrict-overflow=5 -Waggregate-return -Winvalid-pch \
+	-Wno-unknown-pragmas -Wno-format-nonliteral -Wmultistatement-macros \
+	-Wno-long-long -Wno-variadic-macros -Wno-packed -Wstrict-aliasing=3 \
+	-Wformat-overflow -Wformat-truncation -Wstringop-overflow -Wpacked \
+	-Wno-overlength-strings -Wno-vla -Wstringop-truncation -Wunreachable-code \
+	-Wlarger-than=65536 -Wmain -Wnormalized=nfkc
+CFLAGS = $(CWARN_GENERAL) \
+	$(CWARN_UNUSED) \
+	$(CWARN_DECLARATIONS) \
+	$(CWARN_SWITCH) \
+	$(CWARN_POINTERS) \
+	$(CWARN_OPTIMIZATION) \
+	$(CWARN_OTHERS) \
+	-I./inc/ \
+	-I./test/deps/
 
 # All targets. This assumes there exists a .h, .c, and _test.c per target.
 TARGETS = array \
