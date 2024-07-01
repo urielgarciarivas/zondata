@@ -21,4 +21,8 @@
 
 #include <stdio.h>
 
+typedef struct __zng_hash_set {
+  size_t size;
+} hash_set;
+
 #endif // __ZNG_HASH_SET_H__

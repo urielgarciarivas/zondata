@@ -20,7 +20,10 @@
 #include "../deps/zontest/test.h"
 
 TEST(SortMapTest, all_tests) {
-  EXPECT_TRUE(1);
+  const size_t size = 10;
+  sort_map map;
+  map.size = 10;
+  EXPECT_EQUAL(map.size, size);
 }
 
 int main(void) {

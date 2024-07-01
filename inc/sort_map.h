@@ -21,4 +21,8 @@
 
 #include <stdio.h>
 
+typedef struct __zng_sort_map {
+  size_t size;
+} sort_map;
+
 #endif // __ZNG_SORT_MAP_H__

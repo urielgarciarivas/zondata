@@ -21,4 +21,8 @@
 
 #include <stdio.h>
 
+typedef struct __zng_hash_map {
+  size_t size;
+} hash_map;
+
 #endif // __ZNG_HASH_MAP_H__

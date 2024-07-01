@@ -20,7 +20,10 @@
 #include "../deps/zontest/test.h"
 
 TEST(HashMapTest, all_tests) {
-  EXPECT_TRUE(1);
+  const size_t size = 10;
+  hash_map map;
+  map.size = size;
+  EXPECT_EQUAL(map.size, size);
 }
 
 int main(void) {
