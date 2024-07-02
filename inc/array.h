@@ -25,6 +25,7 @@
 typedef struct __zng_array {
   int* data;
   size_t size;
+  size_t capacity;
 } array;
 
 // Every new array needs to be deleted using deallocate_array(...).

@@ -22,7 +22,7 @@
 TEST(SortMapTest, all_tests) {
   const size_t size = 10;
   sort_map map;
-  map.size = 10;
+  map.size = size;
   EXPECT_EQUAL(map.size, size);
 }
 

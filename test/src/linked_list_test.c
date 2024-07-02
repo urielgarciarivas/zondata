@@ -26,8 +26,9 @@ TEST(LinkedListAllocation, simple_allocation) {
   EXPECT_DIFFERENT(list, NULL);
   EXPECT_DIFFERENT(list->head, NULL);
   EXPECT_DIFFERENT(list->tail, NULL);
-  EXPECT_EQUAL(list->size, 1);
   EXPECT_EQUAL(list->head->value, element);
+  EXPECT_EQUAL(list->head, list->tail);
+  EXPECT_EQUAL(list->size, 1);
 
   deallocate_linked_list(list);
 }
@@ -105,7 +106,7 @@ TEST(LinkedListAlgorithm, reverse_list) {
 
   node = list->head;
 
-  for (int i = 0; i <  (int) size; ++i) {
+  for (int i = 0; i < (int) size; ++i) {
     node->value = i;
     node = node->next;
   }

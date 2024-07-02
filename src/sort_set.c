@@ -26,8 +26,6 @@ inline sort_set* allocate_sort_set(int value) {
   ALLOCATE(sort_set_node, response->root);
   response->size = 1;
   response->root->value = value;
-  response->root->left_depth = 0;
-  response->root->right_depth = 0;
   response->root->left = NULL;
   response->root->right = NULL;
 
@@ -74,14 +72,24 @@ bool exist_in_sort_set(const sort_set*const set, int target) {
   return false;
 }
 
-void delete_all_elements_sort_set(sort_set_node* node) {
+void delete_nodes_recursive_sort_set(sort_set_node* node) {
   if (node == NULL) {
     return;
   }
 
-  delete_all_elements_sort_set(node->left);  
-  delete_all_elements_sort_set(node->right);
+  delete_nodes_recursive_sort_set(node->left);  
+  delete_nodes_recursive_sort_set(node->right);
   DEALLOCATE(node);  
+}
+
+void delete_all_elements_sort_set(sort_set*const set) {
+  if (is_null_or_empty_sort_set(set)) {
+    return;
+  }
+
+  delete_nodes_recursive_sort_set(set->root);
+  set->root = NULL;
+  set->size = 0;
 }
 
 void deallocate_sort_set(sort_set* set) {
@@ -90,7 +98,7 @@ void deallocate_sort_set(sort_set* set) {
   }
 
   if (set->root != NULL) {
-    delete_all_elements_sort_set(set->root);
+    delete_all_elements_sort_set(set);
   }
 
   DEALLOCATE(set);

@@ -20,12 +20,11 @@
 # NOTE: Exclude -Wc++-compat -Wabi-tag
 CC = gcc
 CWARN_GENERAL = -Wall -Wextra -Werror -Wpedantic -Wconversion -Wformat=2 \
-	-Wshadow -Wundef -Wvla -Wwrite-strings -Wlogical-op -Wfloat-equal \
-	-Wpointer-arith -Winline -Wsystem-headers -Wchar-subscripts \
+	-Wshadow -Wundef -Wvla -Wwrite-strings -Wlogical-op -Wfloat-equal -Winline \
+	-Wpointer-arith -Wsystem-headers -Wchar-subscripts -Wzero-length-bounds \
 	-Wdeprecated-declarations -Warray-bounds -Wduplicated-cond -Winit-self \
 	-Wduplicated-branches -Wlogical-not-parentheses -Wformat-security \
-	-Wformat-signedness -Wformat-zero-length -Werror=array-bounds \
-	-Wzero-length-bounds -Woverlength-strings
+	-Wformat-signedness -Wformat-zero-length -Woverlength-strings
 CWARN_UNUSED = -Wunused -Wunused-parameter -Wunused-function -Wunused-label \
 	-Wunused-value -Wuninitialized -Wunused-variable -Wunused-macros \
 	-Wunused-local-typedefs -Wunused-const-variable -Wunused-result \

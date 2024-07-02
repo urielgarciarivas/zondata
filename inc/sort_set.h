@@ -24,8 +24,6 @@
 
 typedef struct __zng_sort_set_node {
   int value;
-  int left_depth;
-  int right_depth;
   struct __zng_sort_set_node* left;
   struct __zng_sort_set_node* right;
 } sort_set_node;
@@ -49,7 +47,8 @@ extern void add_to_empty_sort_set(sort_set*const set, int value);
 extern bool exist_in_sort_set(const sort_set*const set, int target);
 
 // TODO:
-extern void delete_all_elements_sort_set(sort_set_node* node);
+extern void delete_nodes_recursive_sort_set(sort_set_node* node);
+extern void delete_all_elements_sort_set(sort_set*const node);
 extern void deallocate_sort_set(sort_set* list);
 
 #endif // __ZNG_SORT_SET_H__
