@@ -65,7 +65,8 @@ TARGETS = array \
 	hash_set \
 	linked_list \
 	sort_map \
-	sort_set
+	sort_set \
+	string
 
 # Object files.
 OBJ_DIR = ./obj
