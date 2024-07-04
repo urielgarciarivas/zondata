@@ -19,7 +19,7 @@
 #ifndef __ZNG_HASH_SET_H__
 #define __ZNG_HASH_SET_H__
 
-#include <stdio.h>
+#include <stddef.h>
 
 typedef struct __zng_hash_set {
   size_t size;

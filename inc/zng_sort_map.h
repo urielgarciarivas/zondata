@@ -19,7 +19,7 @@
 #ifndef __ZNG_SORT_MAP_H__
 #define __ZNG_SORT_MAP_H__
 
-#include <stdio.h>
+#include <stddef.h>
 
 typedef struct __zng_sort_map {
   size_t size;
