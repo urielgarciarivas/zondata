@@ -19,7 +19,7 @@
 #include "../../inc/zng_string.h"
 #include "../deps/zontest/test.h"
 
-TEST(ChainTest, all_tests) {
+TEST(StringTest, all_tests) {
   const size_t size = 10;
   zng_string sentence;
   sentence.size = size;
@@ -27,6 +27,6 @@ TEST(ChainTest, all_tests) {
 }
 
 int main(void) {
-  RUN_TESTS("ChainTest");
+  RUN_TESTS("StringTest");
   return TEST_RESULT();
 }

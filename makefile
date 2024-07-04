@@ -16,12 +16,12 @@
 
 # Compilation. Activate as many warnings as possible for maximum safety.
 # TODO: Include -Wredundant-decls -Wpadded -Wc90-c99-compat
-#               -Wtraditional-conversion
+#               -Wtraditional-conversion -fanalyzer -Wlong-long
 # NOTE: Exclude -Wc++-compat -Wabi-tag
 CC = gcc
 
 # Diagnostic and General Warnings.
-CWARN_DIAGNOSTIC = -Wall -Wextra -Werror -Wpedantic -Wsystem-headers
+CWARN_DIAGNOSTIC = -Wall -Wextra -Werror -Wpedantic -Wsystem-headers #-fanalyzer
 
 # Conversion and Format Warnings.
 CWARN_CONVERSION_FORMAT = -Wconversion -Wformat=2 -Wformat-security \
@@ -39,7 +39,7 @@ CWARN_DEPRECATED = -Wdeprecated-declarations -Wold-style-definition \
 	-Wmissing-format-attribute
 
 # Preprocessor Warnings.
-CWARN_PREPROCESSOR = -Wundef
+CWARN_PREPROCESSOR = -Wundef -Wl,-z,now -Wl,-z,defs
 
 # Unused Warnings.
 CWARN_UNUSED = -Wunused -Wunused-parameter -Wunused-function -Wunused-label \
@@ -59,12 +59,14 @@ CWARN_SWITCH = -Wswitch-default -Wswitch-enum
 CWARN_POINTERS = -Wincompatible-pointer-types -Wcast-qual -Wpointer-sign \
 	-Wrestrict -Wnull-dereference -Wuseless-cast -Wnonnull -Walloca \
 	-Wcast-align=strict -Wbad-function-cast -Wcast-function-type \
-	-Wstack-protector -Waddress -Wstringop-overread -Wnonnull-compare
+	-Wstack-protector -Waddress -Wstringop-overread -Wnonnull-compare \
+	-Wpointer-compare
 
 # Optimization Warnings.
 CWARN_OPTIMIZATION = -Wdisabled-optimization -Wdouble-promotion \
 	-Wunsafe-loop-optimizations -Wunsuffixed-float-constants \
-	-Wfloat-conversion -Winline
+	-Wfloat-conversion -Winline -Waddress-of-packed-member -Wclobbered \
+	-Wdiscarded-qualifiers
 
 # Implicit Warnings.
 CWARN_IMPLICIT = -Wimplicit-int -Wimplicit-function-declaration \
@@ -72,15 +74,15 @@ CWARN_IMPLICIT = -Wimplicit-int -Wimplicit-function-declaration \
 
 # Overflow and Size Warnings.
 CWARN_OVERFLOW_SIZE = -Wstrict-overflow=5 -Wlarger-than=65536 -Wpacked \
-	-Wpacked-not-aligned # -Wpadded
+	-Wpacked-not-aligned -Wshift-overflow # -Wpadded
 
 # Compatibility Warnings.
-CWARN_COMPATIBILITY = # -Wc90-c99-compat
+CWARN_COMPATIBILITY = # -Wlong-long -Wc90-c99-compat
 
 # Code Quality Warnings.
 CWARN_CODE_QUALITY = -Waggregate-return -Winvalid-pch -Wmultistatement-macros \
 	-Wstrict-aliasing=3 -Wunreachable-code -Wstringop-overflow \
-	-Wstringop-truncation -Wnormalized=nfkc -Walloc-zero \
+	-Wstringop-truncation -Wnormalized=nfkc -Walloc-zero -Wparentheses \
 	-Wshift-count-negative -Wshift-count-overflow -Wmissing-noreturn \
 	-Wvariadic-macros -Wjump-misses-init -Wmain -Wvector-operation-performance
 
@@ -104,12 +106,12 @@ CFLAGS = $(CWARN_DIAGNOSTIC) \
 
 # All targets. This assumes there exists a .h, .c, and _test.c per target.
 TARGETS = zng_array \
-	zng_string \
 	zng_hash_map \
 	zng_hash_set \
 	zng_linked_list \
 	zng_sort_map \
-	zng_sort_set
+	zng_sort_set \
+	zng_string
 
 # Object files.
 OBJ_DIR = ./obj
