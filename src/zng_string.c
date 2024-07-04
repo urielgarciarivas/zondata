@@ -21,7 +21,7 @@
 #include "../inc/zng_memory.h"
 #include "../inc/zng_string.h"
 
-zng_string* allocate_chain(const char*const sentence) {
+zng_string* allocate_string(const char*const sentence) {
   zng_string* response;
   size_t size = strlen(sentence);
 
@@ -37,7 +37,7 @@ zng_string* allocate_chain(const char*const sentence) {
   return response;
 }
 
-zng_string* allocate_empty_chain(void) {
+zng_string* allocate_empty_string(void) {
   zng_string* response;
 
   ALLOCATE(zng_string, response);
@@ -48,18 +48,18 @@ zng_string* allocate_empty_chain(void) {
   return response;
 }
 
-zng_string* allocate_preset_chain(size_t size, char value);
-zng_string* allocate_copy_chain(const zng_string*const list);
+zng_string* allocate_preset_string(size_t size, char value);
+zng_string* allocate_copy_string(const zng_string*const list);
 
-inline bool is_null_or_empty_chain(const zng_string*const sentence) {
+inline bool is_null_or_empty_string(const zng_string*const sentence) {
   return sentence == NULL || (sentence->data == NULL && sentence->size == 0);
 }
 
-inline bool is_empty_chain(const zng_string*const sentence) {
+inline bool is_empty_string(const zng_string*const sentence) {
   return sentence != NULL && sentence->data == NULL && sentence->size == 0;
 }
 
-bool exist_in_chain(const zng_string*const sentence, char target) {
+bool exist_in_string(const zng_string*const sentence, char target) {
   for (size_t i = 0; i < sentence->size; ++i) {
     if (sentence->data[i] == target) {
         return true;
@@ -69,13 +69,13 @@ bool exist_in_chain(const zng_string*const sentence, char target) {
   return false;
 }
 
-bool are_equal_chain(const zng_string*const lhs, const zng_string*const rhs) {
+bool are_equal_string(const zng_string*const lhs, const zng_string*const rhs) {
   if (lhs == NULL && rhs == NULL) {
     return true;
-  } else if (is_empty_chain(lhs) && is_empty_chain(rhs)) { 
+  } else if (is_empty_string(lhs) && is_empty_string(rhs)) { 
     return true;
-  } else if (is_null_or_empty_chain(lhs)
-          || is_null_or_empty_chain(rhs)
+  } else if (is_null_or_empty_string(lhs)
+          || is_null_or_empty_string(rhs)
           || lhs->size != rhs->size) {
     return false;
   }
@@ -89,16 +89,16 @@ bool are_equal_chain(const zng_string*const lhs, const zng_string*const rhs) {
   return true;
 }
 
-void add_to_chain(zng_string*const arr, char value);
-void add_to_empty_chain(zng_string*const arr, char value);
-void append_to_chain(zng_string*const arr, const zng_string*const append);
+void add_to_string(zng_string*const arr, char value);
+void add_to_empty_string(zng_string*const arr, char value);
+void append_to_string(zng_string*const arr, const char*const append);
 
 // TODO:
-void reverse_chain(zng_string*const list);
-void sort_chain(zng_string*const list);
+void reverse_string(zng_string*const list);
+void sort_string(zng_string*const list);
 
 // TODO:
-void delete_first_match_chain(zng_string*const arr);
-void delete_last_element_chain(zng_string*const arr);
-void delete_all_elements_chain(zng_string*const arr);
-void deallocate_chain(zng_string* arr);
+void delete_first_match_string(zng_string*const arr);
+void delete_last_element_string(zng_string*const arr);
+void delete_all_elements_string(zng_string*const arr);
+void deallocate_string(zng_string* arr);
