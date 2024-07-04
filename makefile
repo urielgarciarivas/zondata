@@ -19,43 +19,82 @@
 #               -Wtraditional-conversion
 # NOTE: Exclude -Wc++-compat -Wabi-tag
 CC = gcc
-CWARN_GENERAL = -Wall -Wextra -Werror -Wpedantic -Wconversion -Wformat=2 \
-	-Wshadow -Wundef -Wvla -Wwrite-strings -Wlogical-op -Wfloat-equal -Winline \
-	-Wpointer-arith -Wsystem-headers -Wchar-subscripts -Wzero-length-bounds \
-	-Wdeprecated-declarations -Warray-bounds -Wduplicated-cond -Winit-self \
-	-Wduplicated-branches -Wlogical-not-parentheses -Wformat-security \
-	-Wformat-signedness -Wformat-zero-length -Woverlength-strings
+
+# Diagnostic and General Warnings.
+CWARN_DIAGNOSTIC = -Wall -Wextra -Werror -Wpedantic -Wsystem-headers
+
+# Conversion and Format Warnings.
+CWARN_CONVERSION_FORMAT = -Wconversion -Wformat=2 -Wformat-security \
+	-Wformat-signedness -Wformat-zero-length -Woverlength-strings \
+	-Wformat-overflow -Wformat-truncation -Wformat-nonliteral -Wformat-y2k
+
+# Variable and Assignment Warnings.
+CWARN_VARIABLES = -Wshadow -Wwrite-strings -Wlogical-op -Wfloat-equal \
+	-Wpointer-arith -Wchar-subscripts -Wzero-length-bounds -Warray-bounds \
+	-Wduplicated-cond -Winit-self -Wduplicated-branches \
+	-Wlogical-not-parentheses
+
+# Deprecated and Legacy Warnings.
+CWARN_DEPRECATED = -Wdeprecated-declarations -Wold-style-definition \
+	-Wmissing-format-attribute
+
+# Preprocessor Warnings
+CWARN_PREPROCESSOR = -Wundef
+
+# Unused Warnings.
 CWARN_UNUSED = -Wunused -Wunused-parameter -Wunused-function -Wunused-label \
 	-Wunused-value -Wuninitialized -Wunused-variable -Wunused-macros \
 	-Wunused-local-typedefs -Wunused-const-variable -Wunused-result \
 	-Wunused-but-set-variable -Wunused-but-set-parameter
-CWARN_DECLARATIONS = -Wstrict-prototypes -Wold-style-definition \
-	-Wmissing-prototypes -Wmissing-declarations -Wmissing-field-initializers \
-	-Wmissing-include-dirs -Wnested-externs -Wmissing-format-attribute
+
+# Declaration Warnings.
+CWARN_DECLARATIONS = -Wstrict-prototypes -Wmissing-prototypes \
+	-Wmissing-declarations -Wmissing-field-initializers -Wmissing-include-dirs \
+	-Wnested-externs
+
+# Switch Warnings.
 CWARN_SWITCH = -Wswitch-default -Wswitch-enum
-CWARN_POINTERS = -Wincompatible-pointer-types -Wcast-qual \
-	-Wpointer-sign -Wrestrict -Wnull-dereference -Wuseless-cast -Wnonnull \
-	-Walloca -Wcast-align=strict -Wbad-function-cast -Wcast-function-type \
+
+# Pointer and Cast Warnings.
+CWARN_POINTERS = -Wincompatible-pointer-types -Wcast-qual -Wpointer-sign \
+	-Wrestrict -Wnull-dereference -Wuseless-cast -Wnonnull -Walloca \
+	-Wcast-align=strict -Wbad-function-cast -Wcast-function-type \
 	-Wstack-protector -Waddress -Wstringop-overread -Wnonnull-compare
+
+# Optimization Warnings.
 CWARN_OPTIMIZATION = -Wdisabled-optimization -Wdouble-promotion \
-	-Wunsafe-loop-optimizations -Wunsuffixed-float-constants -Wfloat-conversion
+	-Wunsafe-loop-optimizations -Wunsuffixed-float-constants \
+	-Wfloat-conversion -Winline
+
+# Implicit Warnings.
 CWARN_IMPLICIT = -Wimplicit-int -Wimplicit-function-declaration \
 	-Wimplicit-fallthrough
-CWARN_OTHERS = -Wstrict-overflow=5 -Waggregate-return -Winvalid-pch \
-	-Wmultistatement-macros -Wstrict-aliasing=3 -Wunreachable-code \
-	-Wformat-overflow -Wformat-truncation -Wstringop-overflow -Wpacked \
-	-Wstringop-truncation -Wlarger-than=65536 -Wmain -Wnormalized=nfkc \
-	-Walloc-zero -Wformat-y2k -Wshift-count-negative -Wshift-count-overflow \
-	-Wpacked-not-aligned -Wmissing-noreturn -Wvariadic-macros \
-	-Wjump-misses-init -Wformat-nonliteral -Wvector-operation-performance
-CFLAGS = $(CWARN_GENERAL) \
+
+# Overflow and Size Warnings.
+CWARN_OVERFLOW_SIZE = -Wstrict-overflow=5 -Wlarger-than=65536 -Wpacked \
+	-Wpacked-not-aligned
+
+# Code Quality Warnings.
+CWARN_CODE_QUALITY = -Waggregate-return -Winvalid-pch -Wmultistatement-macros \
+	-Wstrict-aliasing=3 -Wunreachable-code -Wstringop-overflow \
+	-Wstringop-truncation -Wnormalized=nfkc -Walloc-zero \
+	-Wshift-count-negative -Wshift-count-overflow -Wmissing-noreturn \
+	-Wvariadic-macros -Wjump-misses-init -Wmain -Wvector-operation-performance
+
+# All flags.
+CFLAGS = $(CWARN_DIAGNOSTIC) \
+	$(CWARN_CONVERSION_FORMAT) \
+	$(CWARN_VARIABLES) \
+	$(CWARN_DEPRECATED) \
+	$(CWARN_PREPROCESSOR) \
 	$(CWARN_UNUSED) \
 	$(CWARN_DECLARATIONS) \
 	$(CWARN_SWITCH) \
 	$(CWARN_POINTERS) \
 	$(CWARN_OPTIMIZATION) \
 	$(CWARN_IMPLICIT) \
-	$(CWARN_OTHERS) \
+	$(CWARN_OVERFLOW_SIZE) \
+	$(CWARN_CODE_QUALITY) \
 	-I./inc/ \
 	-I./test/deps/
 
