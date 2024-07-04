@@ -77,14 +77,15 @@ CWARN_OVERFLOW_SIZE = -Wstrict-overflow=5 -Wlarger-than=65536 -Wpacked \
 	-Wpacked-not-aligned -Wshift-overflow # -Wpadded
 
 # Compatibility Warnings.
-CWARN_COMPATIBILITY = # -Wlong-long -Wc90-c99-compat
+CWARN_COMPATIBILITY = -Wsign-compare # -Wlong-long -Wc90-c99-compat
 
 # Code Quality Warnings.
 CWARN_CODE_QUALITY = -Waggregate-return -Winvalid-pch -Wmultistatement-macros \
 	-Wstrict-aliasing=3 -Wunreachable-code -Wstringop-overflow \
 	-Wstringop-truncation -Wnormalized=nfkc -Walloc-zero -Wparentheses \
 	-Wshift-count-negative -Wshift-count-overflow -Wmissing-noreturn \
-	-Wvariadic-macros -Wjump-misses-init -Wmain -Wvector-operation-performance
+	-Wvariadic-macros -Wjump-misses-init -Wmain -Wvector-operation-performance \
+	-Wsequence-point -Wreturn-local-addr
 
 # All flags.
 CFLAGS = $(CWARN_DIAGNOSTIC) \
