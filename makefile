@@ -38,7 +38,7 @@ CWARN_VARIABLES = -Wshadow -Wwrite-strings -Wlogical-op -Wfloat-equal \
 CWARN_DEPRECATED = -Wdeprecated-declarations -Wold-style-definition \
 	-Wmissing-format-attribute
 
-# Preprocessor Warnings
+# Preprocessor Warnings.
 CWARN_PREPROCESSOR = -Wundef
 
 # Unused Warnings.
@@ -50,7 +50,7 @@ CWARN_UNUSED = -Wunused -Wunused-parameter -Wunused-function -Wunused-label \
 # Declaration Warnings.
 CWARN_DECLARATIONS = -Wstrict-prototypes -Wmissing-prototypes \
 	-Wmissing-declarations -Wmissing-field-initializers -Wmissing-include-dirs \
-	-Wnested-externs
+	-Wnested-externs # -Wredundant-decls -Wtraditional-conversion
 
 # Switch Warnings.
 CWARN_SWITCH = -Wswitch-default -Wswitch-enum
@@ -72,7 +72,10 @@ CWARN_IMPLICIT = -Wimplicit-int -Wimplicit-function-declaration \
 
 # Overflow and Size Warnings.
 CWARN_OVERFLOW_SIZE = -Wstrict-overflow=5 -Wlarger-than=65536 -Wpacked \
-	-Wpacked-not-aligned
+	-Wpacked-not-aligned # -Wpadded
+
+# Compatibility Warnings.
+CWARN_COMPATIBILITY = # -Wc90-c99-compat
 
 # Code Quality Warnings.
 CWARN_CODE_QUALITY = -Waggregate-return -Winvalid-pch -Wmultistatement-macros \
@@ -94,6 +97,7 @@ CFLAGS = $(CWARN_DIAGNOSTIC) \
 	$(CWARN_OPTIMIZATION) \
 	$(CWARN_IMPLICIT) \
 	$(CWARN_OVERFLOW_SIZE) \
+	$(CWARN_COMPATIBILITY) \
 	$(CWARN_CODE_QUALITY) \
 	-I./inc/ \
 	-I./test/deps/
