@@ -16,12 +16,12 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#include "../../inc/array.h"
+#include "../../inc/zng_array.h"
 #include "../deps/zontest/test.h"
 
 TEST(ArrayAllocation, simple_allocation) {
   const int element = 15;
-  array* arr = allocate_array(element);
+  zng_array* arr = allocate_array(element);
 
   EXPECT_DIFFERENT(arr, NULL);
   EXPECT_DIFFERENT(arr->data, NULL);
@@ -34,7 +34,7 @@ TEST(ArrayAllocation, simple_allocation) {
 TEST(ArrayAllocation, preset_allocation) {
   const size_t size = 100;
   const int value = 27;
-  array* arr = allocate_preset_array(size, value);
+  zng_array* arr = allocate_preset_array(size, value);
 
   EXPECT_DIFFERENT(arr, NULL);
   EXPECT_EQUAL(arr->size, size);
@@ -47,7 +47,7 @@ TEST(ArrayAllocation, preset_allocation) {
 }
 
 TEST(ArrayAllocation, empty_allocation) {
-  array* arr = allocate_empty_array();
+  zng_array* arr = allocate_empty_array();
 
   EXPECT_DIFFERENT(arr, NULL);
   EXPECT_EQUAL(arr->size, 0);
@@ -59,8 +59,8 @@ TEST(ArrayAllocation, empty_allocation) {
 TEST(ArrayAllocation, copy_allocation) {
   const size_t size = 100;
   const int value = 46;
-  array* arr = allocate_preset_array(size, value);
-  array* arr_copy = allocate_copy_array(arr);
+  zng_array* arr = allocate_preset_array(size, value);
+  zng_array* arr_copy = allocate_copy_array(arr);
 
   EXPECT_DIFFERENT(arr, NULL);
   EXPECT_DIFFERENT(arr_copy, NULL);
@@ -76,7 +76,7 @@ TEST(ArrayAllocation, copy_allocation) {
 }
 
 TEST(ArrayVerification, check_if_exists) {
-  array* arr = allocate_preset_array(200, 0);
+  zng_array* arr = allocate_preset_array(200, 0);
 
   for (int i = 0; i < (int) arr->size; ++i) {
     arr->data[i] = i;
@@ -91,8 +91,8 @@ TEST(ArrayVerification, check_if_exists) {
 }
 
 TEST(ArrayVerification, check_equal) {
-  array* arr = allocate_preset_array(200, 0);
-  array* arr_copy = allocate_copy_array(arr);
+  zng_array* arr = allocate_preset_array(200, 0);
+  zng_array* arr_copy = allocate_copy_array(arr);
 
   EXPECT_TRUE(are_equal_array(arr, arr));
   EXPECT_TRUE(are_equal_array(arr, arr_copy));
@@ -108,7 +108,7 @@ TEST(ArrayVerification, check_equal) {
 
 TEST(ArrayManipulation, adding_elements) {
   const size_t size = 100;
-  array* arr = allocate_empty_array();
+  zng_array* arr = allocate_empty_array();
 
   EXPECT_EQUAL(arr->data, NULL);
   EXPECT_EQUAL(arr->size, 0);

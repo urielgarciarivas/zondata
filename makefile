@@ -60,13 +60,13 @@ CFLAGS = $(CWARN_GENERAL) \
 	-I./test/deps/
 
 # All targets. This assumes there exists a .h, .c, and _test.c per target.
-TARGETS = array \
-	hash_map \
-	hash_set \
-	linked_list \
-	sort_map \
-	sort_set \
-	string
+TARGETS = zng_array \
+	zng_string \
+	zng_hash_map \
+	zng_hash_set \
+	zng_linked_list \
+	zng_sort_map \
+	zng_sort_set
 
 # Object files.
 OBJ_DIR = ./obj

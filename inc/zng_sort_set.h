@@ -26,29 +26,29 @@ typedef struct __zng_sort_set_node {
   int value;
   struct __zng_sort_set_node* left;
   struct __zng_sort_set_node* right;
-} sort_set_node;
+} zng_sort_set_node;
 
 typedef struct __zng_sort_set {
   size_t size;
-  sort_set_node* root;
-} sort_set;
+  zng_sort_set_node* root;
+} zng_sort_set;
 
-extern sort_set* allocate_sort_set(int value);
-extern sort_set* allocate_empty_sort_set(void);
+extern zng_sort_set* allocate_sort_set(int value);
+extern zng_sort_set* allocate_empty_sort_set(void);
 
-extern bool is_null_or_empty_sort_set(const sort_set*const set);
-extern bool is_empty_sort_set(const sort_set*const set);
+extern bool is_null_or_empty_sort_set(const zng_sort_set*const set);
+extern bool is_empty_sort_set(const zng_sort_set*const set);
 
-extern void add_to_sort_set(sort_set*const set, int value);
-extern void add_to_empty_sort_set(sort_set*const set, int value);
+extern void add_to_sort_set(zng_sort_set*const set, int value);
+extern void add_to_empty_sort_set(zng_sort_set*const set, int value);
 
 // Time: O(log(n))
 // Space: O(1)
-extern bool exist_in_sort_set(const sort_set*const set, int target);
+extern bool exist_in_sort_set(const zng_sort_set*const set, int target);
 
 // TODO:
-extern void delete_nodes_recursive_sort_set(sort_set_node* node);
-extern void delete_all_elements_sort_set(sort_set*const node);
-extern void deallocate_sort_set(sort_set* list);
+extern void delete_nodes_recursive_sort_set(zng_sort_set_node* node);
+extern void delete_all_elements_sort_set(zng_sort_set*const node);
+extern void deallocate_sort_set(zng_sort_set* list);
 
 #endif // __ZNG_SORT_SET_H__

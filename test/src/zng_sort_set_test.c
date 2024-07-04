@@ -16,12 +16,12 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#include "../../inc/sort_set.h"
+#include "../../inc/zng_sort_set.h"
 #include "../deps/zontest/test.h"
 
 TEST(SortSetAllocation, simple_allocation) {
   const int element = 15;
-  sort_set* set = allocate_sort_set(element);
+  zng_sort_set* set = allocate_sort_set(element);
 
   EXPECT_DIFFERENT(set, NULL);
   EXPECT_DIFFERENT(set->root, NULL);
@@ -32,7 +32,7 @@ TEST(SortSetAllocation, simple_allocation) {
 }
 
 TEST(SortSetAllocation, empty_allocation) {
-  sort_set* set = allocate_empty_sort_set();
+  zng_sort_set* set = allocate_empty_sort_set();
 
   EXPECT_DIFFERENT(set, NULL);
   EXPECT_EQUAL(set->size, 0);
@@ -45,7 +45,7 @@ TEST(SortSetTest, all_tests) {
   const size_t len = 15;
   const int last_element = (int) len - 1;
   const int first_element = 0;
-  sort_set* set = allocate_sort_set(first_element);
+  zng_sort_set* set = allocate_sort_set(first_element);
 
   EXPECT_EQUAL(set->size, 1);
   EXPECT_TRUE(set->root != NULL);

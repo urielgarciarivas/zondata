@@ -16,14 +16,4 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#ifndef __ZNG_SORT_MAP_H__
-#define __ZNG_SORT_MAP_H__
-
-#include <stdio.h>
-
-typedef struct __zng_sort_map {
-  size_t size;
-  size_t capacity;
-} sort_map;
-
-#endif // __ZNG_SORT_MAP_H__
+#include "../inc/zng_sort_map.h"

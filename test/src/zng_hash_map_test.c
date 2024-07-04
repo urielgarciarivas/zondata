@@ -16,17 +16,17 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#include "../../inc/hash_set.h"
+#include "../../inc/zng_hash_map.h"
 #include "../deps/zontest/test.h"
 
-TEST(HashSetTest, all_tests) {
+TEST(HashMapTest, all_tests) {
   const size_t size = 10;
-  hash_set set;
-  set.size = size;
-  EXPECT_EQUAL(set.size, size);
+  zng_hash_map map;
+  map.size = size;
+  EXPECT_EQUAL(map.size, size);
 }
 
 int main(void) {
-  RUN_TESTS("HashSetTest");
+  RUN_TESTS("HashMapTest");
   return TEST_RESULT();
 }

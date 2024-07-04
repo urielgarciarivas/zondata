@@ -16,14 +16,4 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#ifndef __ZNG_HASH_MAP_H__
-#define __ZNG_HASH_MAP_H__
-
-#include <stdio.h>
-
-typedef struct __zng_hash_map {
-  size_t size;
-  size_t capacity;
-} hash_map;
-
-#endif // __ZNG_HASH_MAP_H__
+#include "../inc/zng_hash_set.h"

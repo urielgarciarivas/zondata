@@ -16,17 +16,13 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#include "../../inc/string.h"
-#include "../deps/zontest/test.h"
+#ifndef __ZNG_HASH_SET_H__
+#define __ZNG_HASH_SET_H__
 
-TEST(StringTest, all_tests) {
-  const size_t size = 10;
-  string sentence;
-  sentence.size = size;
-  EXPECT_EQUAL(sentence.size, size);
-}
+#include <stdio.h>
 
-int main(void) {
-  RUN_TESTS("StringTest");
-  return TEST_RESULT();
-}
+typedef struct __zng_hash_set {
+  size_t size;
+} zng_hash_set;
+
+#endif // __ZNG_HASH_SET_H__
