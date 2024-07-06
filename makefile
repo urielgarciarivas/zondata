@@ -136,7 +136,7 @@ all: $(OBJ)
 
 # Testing rule to create and run all tests in BIN.
 test: $(BIN)
-	@$(foreach test_binary,$(BIN), \
+	@$(foreach test_binary, $(BIN), \
 		./$(test_binary); \
 	)
 	@make clean
