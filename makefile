@@ -116,16 +116,16 @@ TARGETS = zng_array \
 
 # Object files.
 OBJ_DIR = ./obj
-OBJ = $(patsubst %,$(OBJ_DIR)/%.o,$(TARGETS))
+OBJ = $(patsubst %, $(OBJ_DIR)/%.o, $(TARGETS))
 
 # Binary files.
 SRC_DIR = ./test/src
 BIN_DIR = ./test/bin
-BIN = $(patsubst %,$(BIN_DIR)/%_test,$(TARGETS))
+BIN = $(patsubst %, $(BIN_DIR)/%_test, $(TARGETS))
 
 # General rule for every object file.
 $(OBJ_DIR)/%.o: ./src/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -x c -c $< -o $@
 
 # General rule for every test binary.
 $(BIN_DIR)/%_test: $(SRC_DIR)/%_test.c $(OBJ_DIR)/%.o
@@ -136,10 +136,10 @@ all: $(OBJ)
 
 # Testing rule to create and run all tests in BIN.
 test: $(BIN)
-	for test_binary in $(BIN); do \
-		./$$test_binary; \
-	done; \
-	make clean
+	@$(foreach test_binary,$(BIN), \
+		./$(test_binary); \
+	)
+	@make clean
 
 # Remove created files.
 clean:
