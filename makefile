@@ -115,12 +115,12 @@ TARGETS = zng_array \
 	zng_string
 
 # Object files.
-OBJ_DIR = ./obj
+OBJ_DIR = ./obj/
 OBJ = $(patsubst %, $(OBJ_DIR)/%.o, $(TARGETS))
 
 # Binary files.
-SRC_DIR = ./test/src
-BIN_DIR = ./test/bin
+SRC_DIR = ./test/src/
+BIN_DIR = ./test/bin/
 BIN = $(patsubst %, $(BIN_DIR)/%_test, $(TARGETS))
 
 # General rule for every object file.
