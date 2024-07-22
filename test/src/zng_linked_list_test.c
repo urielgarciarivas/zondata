@@ -65,15 +65,7 @@ TEST(LinkedListAllocation, preset_allocation) {
 TEST(LinkedListAllocation, copy_allocation) {
   const size_t size = 100;
   zng_linked_list* original_list = allocate_preset_linked_list(size, 0);
-  zng_linked_list_node* original_node;
-
-  EXPECT_DIFFERENT(original_list, NULL);
-  EXPECT_DIFFERENT(original_list->head, NULL);
-  EXPECT_DIFFERENT(original_list->tail, NULL);
-  EXPECT_DIFFERENT(original_list->head, original_list->tail);
-  EXPECT_EQUAL(original_list->size, size);
-
-  original_node = original_list->head;
+  zng_linked_list_node* original_node = original_list->head;
 
   for (size_t i = 0; i < size; ++i) {
     original_node->value = (int) i * 1000;
@@ -86,7 +78,9 @@ TEST(LinkedListAllocation, copy_allocation) {
   EXPECT_DIFFERENT(copy_list, NULL);
   EXPECT_DIFFERENT(copy_list->head, NULL);
   EXPECT_DIFFERENT(copy_list->tail, NULL);
-  EXPECT_DIFFERENT(copy_list->head, original_list->tail);
+  EXPECT_DIFFERENT(copy_list->head, copy_list->tail);
+  EXPECT_DIFFERENT(original_list->head, copy_list->head);
+  EXPECT_DIFFERENT(original_list->tail, copy_list->tail);
   EXPECT_EQUAL(copy_list->size, size);
 
   for (original_node = original_list->head, copy_node = copy_list->head;
@@ -102,9 +96,7 @@ TEST(LinkedListAllocation, copy_allocation) {
 TEST(LinkedListAlgorithm, reverse_list) {
   const size_t size = 100;
   zng_linked_list* list = allocate_preset_linked_list(size, 0);
-  zng_linked_list_node* node;
-
-  node = list->head;
+  zng_linked_list_node* node = list->head;
 
   for (int i = 0; i < (int) size; ++i) {
     node->value = i;

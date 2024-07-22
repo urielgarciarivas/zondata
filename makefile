@@ -118,7 +118,7 @@ TARGETS = zng_array \
 OBJ_DIR = ./obj/
 OBJ = $(patsubst %, $(OBJ_DIR)/%.o, $(TARGETS))
 
-# Binary files.
+# Test files.
 SRC_DIR = ./test/src/
 BIN_DIR = ./test/bin/
 BIN = $(patsubst %, $(BIN_DIR)/%_test, $(TARGETS))
