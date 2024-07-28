@@ -20,8 +20,8 @@
 # NOTE: Exclude -Wc++-compat -Wabi-tag
 CC = gcc
 
-# Diagnostic and General Warnings.
-CWARN_DIAGNOSTIC = -Wall -Wextra -Werror -Wpedantic -Wsystem-headers #-fanalyzer
+# General Warnings.
+CWARN_GENERAL = -Wall -Wextra -Werror -Wpedantic -Wsystem-headers # -fanalyzer
 
 # Conversion and Format Warnings.
 CWARN_CONVERSION_FORMAT = -Wconversion -Wformat=2 -Wformat-security \
@@ -88,7 +88,7 @@ CWARN_CODE_QUALITY = -Waggregate-return -Winvalid-pch -Wmultistatement-macros \
 	-Wsequence-point -Wreturn-local-addr
 
 # All flags.
-CFLAGS = $(CWARN_DIAGNOSTIC) \
+CFLAGS = $(CWARN_GENERAL) \
 	$(CWARN_CONVERSION_FORMAT) \
 	$(CWARN_VARIABLES) \
 	$(CWARN_DEPRECATED) \
