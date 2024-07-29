@@ -125,22 +125,20 @@ BIN = $(patsubst %, $(BIN_DIR)/%_test, $(TARGETS))
 
 # General rule for every object file.
 $(OBJ_DIR)/%.o: ./src/%.c
-	$(CC) $(CFLAGS) -x c -c $< -o $@
+	@$(CC) $(CFLAGS) -x c -c $< -o $@
 
 # General rule for every test binary.
 $(BIN_DIR)/%_test: $(SRC_DIR)/%_test.c $(OBJ_DIR)/%.o
-	$(CC) $(CFLAGS) $^ -o $@
+	@$(CC) $(CFLAGS) $^ -o $@
 
 # Top-level rule. Creates objects only.
 all: $(OBJ)
 
 # Testing rule to create and run all tests in BIN.
 test: $(BIN)
-	@$(foreach test_binary, $(BIN), \
-		./$(test_binary); \
-	)
+	@$(foreach test_binary, $(BIN), ./$(test_binary);)
 	@make clean
 
 # Remove created files.
 clean:
-	rm -f $(OBJ) $(BIN)
+	@rm -f $(OBJ) $(BIN)

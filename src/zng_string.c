@@ -23,10 +23,10 @@
 
 zng_string* allocate_string(const char*const sentence) {
   zng_string* response;
-  size_t size = strlen(sentence);
+  const size_t size = strlen(sentence);
 
   ALLOCATE(zng_string, response);
-  response->size = size;
+  response->size = size + 1;
   response->capacity = size * 3;
   COALLOCATE(char, response->data, response->capacity);
 
