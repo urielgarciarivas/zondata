@@ -16,50 +16,48 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#include "../inc/memory.h"
-#include "../inc/sort_set.h"
+#include "../inc/zng_memory.h"
+#include "../inc/zng_sort_set.h"
 
-inline sort_set* allocate_sort_set(int value) {
-  sort_set* response;
+inline zng_sort_set* allocate_sort_set(int value) {
+  zng_sort_set* response;
 
-  ALLOCATE(sort_set, response);
-  ALLOCATE(sort_set_node, response->root);
+  ALLOCATE(zng_sort_set, response);
+  ALLOCATE(zng_sort_set_node, response->root);
   response->size = 1;
   response->root->value = value;
-  response->root->left_depth = 0;
-  response->root->right_depth = 0;
   response->root->left = NULL;
   response->root->right = NULL;
 
   return response;
 }
 
-inline sort_set* allocate_empty_sort_set(void) {
-  sort_set* response;
+inline zng_sort_set* allocate_empty_sort_set(void) {
+  zng_sort_set* response;
 
-  ALLOCATE(sort_set, response);
+  ALLOCATE(zng_sort_set, response);
   response->size = 0;
   response->root = NULL;
 
   return response;
 }
 
-inline bool is_null_or_empty_sort_set(const sort_set*const set) {
+inline bool is_null_or_empty_sort_set(const zng_sort_set*const set) {
   return set == NULL || (set->root == NULL && set->size == 0);
 }
 
-inline bool is_empty_sort_set(const sort_set*const set) {
+inline bool is_empty_sort_set(const zng_sort_set*const set) {
   return set != NULL && set->root == NULL && set->size == 0;
 }
 
-//inline void add_to_sort_set(sort_set*const set, int value) { set; }
+//inline void add_to_sort_set(zng_sort_set*const set, int value) { set; }
 
-bool exist_in_sort_set(const sort_set*const set, int target) {
+bool exist_in_sort_set(const zng_sort_set*const set, int target) {
   if (is_null_or_empty_sort_set(set)) {
     return false;
   }
 
-  sort_set_node* node = set->root;
+  zng_sort_set_node* node = set->root;
 
   while (node != NULL) {
     if (node->value == target) {
@@ -74,23 +72,33 @@ bool exist_in_sort_set(const sort_set*const set, int target) {
   return false;
 }
 
-void delete_all_elements_sort_set(sort_set_node* node) {
+void delete_nodes_recursive_sort_set(zng_sort_set_node* node) {
   if (node == NULL) {
     return;
   }
 
-  delete_all_elements_sort_set(node->left);  
-  delete_all_elements_sort_set(node->right);
+  delete_nodes_recursive_sort_set(node->left);  
+  delete_nodes_recursive_sort_set(node->right);
   DEALLOCATE(node);  
 }
 
-void deallocate_sort_set(sort_set* set) {
+void delete_all_elements_sort_set(zng_sort_set*const set) {
+  if (is_null_or_empty_sort_set(set)) {
+    return;
+  }
+
+  delete_nodes_recursive_sort_set(set->root);
+  set->root = NULL;
+  set->size = 0;
+}
+
+void deallocate_sort_set(zng_sort_set* set) {
   if (set == NULL) {
     return;
   }
 
   if (set->root != NULL) {
-    delete_all_elements_sort_set(set->root);
+    delete_all_elements_sort_set(set);
   }
 
   DEALLOCATE(set);

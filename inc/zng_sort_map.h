@@ -16,14 +16,14 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#include "../../inc/hash_set.h"
-#include "../deps/zontest/test.h"
+#ifndef __ZNG_SORT_MAP_H__
+#define __ZNG_SORT_MAP_H__
 
-TEST(HashSetTest, all_tests) {
-  EXPECT_TRUE(1);
-}
+#include <stddef.h>
 
-int main(void) {
-  RUN_TESTS("HashSetTest");
-  return TEST_RESULT();
-}
+typedef struct __zng_sort_map {
+  size_t size;
+  size_t capacity;
+} zng_sort_map;
+
+#endif // __ZNG_SORT_MAP_H__

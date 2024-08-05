@@ -18,14 +18,14 @@
 
 #include <stdio.h>
 
-#include "../inc/linked_list.h"
-#include "../inc/memory.h"
+#include "../inc/zng_linked_list.h"
+#include "../inc/zng_memory.h"
 
-inline linked_list* allocate_linked_list(int value) {
-  linked_list* response;
+inline zng_linked_list* allocate_linked_list(int value) {
+  zng_linked_list* response;
 
-  ALLOCATE(linked_list, response);
-  ALLOCATE(linked_list_node, response->head);
+  ALLOCATE(zng_linked_list, response);
+  ALLOCATE(zng_linked_list_node, response->head);
   response->size = 1;
   response->head->value = value;
   response->head->next = NULL;
@@ -34,10 +34,10 @@ inline linked_list* allocate_linked_list(int value) {
   return response;
 }
 
-inline linked_list* allocate_empty_linked_list(void) {
-  linked_list* response;
+inline zng_linked_list* allocate_empty_linked_list(void) {
+  zng_linked_list* response;
 
-  ALLOCATE(linked_list, response);
+  ALLOCATE(zng_linked_list, response);
   response->size = 0;
   response->head = NULL;
   response->tail = NULL;
@@ -45,8 +45,8 @@ inline linked_list* allocate_empty_linked_list(void) {
   return response;
 }
 
-linked_list* allocate_preset_linked_list(size_t size, int value) {
-  linked_list* response = allocate_empty_linked_list();
+zng_linked_list* allocate_preset_linked_list(size_t size, int value) {
+  zng_linked_list* response = allocate_empty_linked_list();
 
   while (size--) {
     add_to_linked_list(response, value);
@@ -55,16 +55,17 @@ linked_list* allocate_preset_linked_list(size_t size, int value) {
   return response;
 }
 
-linked_list* allocate_copy_linked_list(const linked_list*const original) {
+zng_linked_list* allocate_copy_linked_list(
+    const zng_linked_list*const original) {
   if (original == NULL) {
     return NULL;
   } else if (is_empty_linked_list(original)) {
     return allocate_empty_linked_list();
   }
 
-  linked_list* copy = allocate_preset_linked_list(original->size, 0);
-  linked_list_node* original_node = original->head;
-  linked_list_node* copy_node = copy->head;
+  zng_linked_list* copy = allocate_preset_linked_list(original->size, 0);
+  zng_linked_list_node* original_node = original->head;
+  zng_linked_list_node* copy_node = copy->head;
 
   while (original_node != NULL) {
     copy_node->value = original_node->value;
@@ -75,26 +76,26 @@ linked_list* allocate_copy_linked_list(const linked_list*const original) {
   return copy;
 }
 
-inline bool is_null_or_empty_linked_list(const linked_list*const list) {
+inline bool is_null_or_empty_linked_list(const zng_linked_list*const list) {
   return list == NULL
       || (list->head == NULL
        && list->tail == NULL
        && list->size == 0);
 }
 
-inline bool is_empty_linked_list(const linked_list*const list) {
+inline bool is_empty_linked_list(const zng_linked_list*const list) {
   return list != NULL
       && list->head == NULL
       && list->tail == NULL
       && list->size == 0;
 }
 
-bool exist_in_linked_list(const linked_list*const list, int value) {
+bool exist_in_linked_list(const zng_linked_list*const list, int value) {
   if (is_null_or_empty_linked_list(list)) {
     return false;
   }
 
-  linked_list_node* head = list->head;
+  zng_linked_list_node* head = list->head;
 
   while (head != NULL) {
     if (head->value == value) {
@@ -108,7 +109,7 @@ bool exist_in_linked_list(const linked_list*const list, int value) {
 }
 
 bool are_equal_linked_list(
-    const linked_list*const lhs, const linked_list*const rhs) {
+    const zng_linked_list*const lhs, const zng_linked_list*const rhs) {
   if (lhs == NULL && rhs == NULL) {
     return true;
   } else if (is_empty_linked_list(lhs) && is_empty_linked_list(rhs)) {
@@ -119,8 +120,8 @@ bool are_equal_linked_list(
     return false;
   }
 
-  linked_list_node* lhs_node = lhs->head;
-  linked_list_node* rhs_node = rhs->head;
+  zng_linked_list_node* lhs_node = lhs->head;
+  zng_linked_list_node* rhs_node = rhs->head;
 
   while (lhs_node != NULL && rhs_node != NULL) {
     if (lhs_node->value != rhs_node->value) {
@@ -134,7 +135,7 @@ bool are_equal_linked_list(
   return lhs_node == NULL && rhs_node == NULL;
 }
 
-void print_linked_list(const linked_list*const list) {
+void print_linked_list(const zng_linked_list*const list) {
   if (list == NULL) {
     printf("list = NULL\n");
     return;
@@ -143,7 +144,7 @@ void print_linked_list(const linked_list*const list) {
     return;
   }
 
-  linked_list_node* head = list->head;
+  zng_linked_list_node* head = list->head;
   printf("list = {");
 
   while (head != NULL) {
@@ -155,19 +156,19 @@ void print_linked_list(const linked_list*const list) {
   printf("}\n");
 }
 
-inline void add_to_empty_linked_list(linked_list*const list, int value) {
+inline void add_to_empty_linked_list(zng_linked_list*const list, int value) {
   if (list == NULL || !is_empty_linked_list(list)) {
     return;
   }
 
-  ALLOCATE(linked_list_node, list->head);
+  ALLOCATE(zng_linked_list_node, list->head);
   list->size = 1;
   list->head->value = value;
   list->head->next = NULL;
   list->tail = list->head;
 }
 
-inline void add_to_linked_list(linked_list*const list, int value) {
+inline void add_to_linked_list(zng_linked_list*const list, int value) {
   if (list == NULL) {
     return;
   } else if (is_empty_linked_list(list)) {
@@ -175,23 +176,23 @@ inline void add_to_linked_list(linked_list*const list, int value) {
     return;
   }
 
-  ALLOCATE(linked_list_node, list->tail->next);
+  ALLOCATE(zng_linked_list_node, list->tail->next);
   list->tail = list->tail->next;
   list->tail->value = value;
   list->tail->next = NULL;
   list->size++;
 }
 
-//void erase_all_match_linked_list(linked_list* list, int target) {}
+//void erase_all_match_linked_list(zng_linked_list* list, int target) {}
 
-void reverse_linked_list(linked_list*const list) {
+void reverse_linked_list(zng_linked_list*const list) {
   if (is_null_or_empty_linked_list(list)) {
     return;
   }
 
-  linked_list_node* current = list->head;
-  linked_list_node* previous = NULL;       
-  linked_list_node* next = NULL;
+  zng_linked_list_node* current = list->head;
+  zng_linked_list_node* previous = NULL;       
+  zng_linked_list_node* next = NULL;
 
   while (current != NULL) {
     next = current->next;
@@ -205,14 +206,14 @@ void reverse_linked_list(linked_list*const list) {
   list->tail = current;
 }
 
-//void sort_linked_list(linked_list*const list) {}
+//void sort_linked_list(zng_linked_list*const list) {}
 
-void delete_first_match_linked_list(linked_list*const list, int target) {
+void delete_first_match_linked_list(zng_linked_list*const list, int target) {
   if (is_null_or_empty_linked_list(list)) {
     return;
   }
 
-  linked_list_node* node = list->head;
+  zng_linked_list_node* node = list->head;
 
   if (node->value == target) {
     if (list->size == 1) {
@@ -232,7 +233,7 @@ void delete_first_match_linked_list(linked_list*const list, int target) {
         list->tail = node;
       }
 
-      linked_list_node* aux;
+      zng_linked_list_node* aux;
       aux = node->next;
       node->next = node->next->next;
       DEALLOCATE(aux);
@@ -244,13 +245,13 @@ void delete_first_match_linked_list(linked_list*const list, int target) {
   }
 }
 
-void delete_all_elements_linked_list(linked_list*const list) {
+void delete_all_elements_linked_list(zng_linked_list*const list) {
   if (is_null_or_empty_linked_list(list)) {
     return;
   }
 
-  linked_list_node* node;
-  linked_list_node* next;
+  zng_linked_list_node* node;
+  zng_linked_list_node* next;
 
   for (node = list->head; node != NULL; node = next) {
     next = node->next;
@@ -262,7 +263,7 @@ void delete_all_elements_linked_list(linked_list*const list) {
   list->size = 0;
 }
 
-inline void deallocate_linked_list(linked_list* list) {
+inline void deallocate_linked_list(zng_linked_list* list) {
   if (list == NULL) {
     return;
   }

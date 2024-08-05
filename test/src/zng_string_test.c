@@ -16,4 +16,17 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#include "../inc/sort_map.h"
+#include "../../inc/zng_string.h"
+#include "../deps/zontest/test.h"
+
+TEST(StringTest, all_tests) {
+  const size_t size = 10;
+  zng_string sentence;
+  sentence.size = size;
+  EXPECT_EQUAL(sentence.size, size);
+}
+
+int main(void) {
+  RUN_TESTS("StringTest");
+  return TEST_RESULT();
+}

@@ -16,14 +16,4 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#include "../../inc/hash_map.h"
-#include "../deps/zontest/test.h"
-
-TEST(HashMapTest, all_tests) {
-  EXPECT_TRUE(1);
-}
-
-int main(void) {
-  RUN_TESTS("HashMapTest");
-  return TEST_RESULT();
-}
+#include "../inc/zng_sort_map.h"

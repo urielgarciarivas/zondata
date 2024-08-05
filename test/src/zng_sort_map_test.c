@@ -16,4 +16,17 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#include "../inc/hash_map.h"
+#include "../../inc/zng_sort_map.h"
+#include "../deps/zontest/test.h"
+
+TEST(SortMapTest, all_tests) {
+  const size_t size = 10;
+  zng_sort_map map;
+  map.size = size;
+  EXPECT_EQUAL(map.size, size);
+}
+
+int main(void) {
+  RUN_TESTS("SortMapTest");
+  return TEST_RESULT();
+}

@@ -16,9 +16,13 @@
  * https://github.com/zoningorg/zondata/blob/main/LICENSE
  */
 
-#ifndef __ZNG_HASH_MAP_H__
-#define __ZNG_HASH_MAP_H__
+#ifndef __ZNG_HASH_SET_H__
+#define __ZNG_HASH_SET_H__
 
-#include <stdio.h>
+#include <stddef.h>
 
-#endif // __ZNG_HASH_MAP_H__
+typedef struct __zng_hash_set {
+  size_t size;
+} zng_hash_set;
+
+#endif // __ZNG_HASH_SET_H__
