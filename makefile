@@ -142,3 +142,7 @@ test: $(BIN)
 # Remove created files.
 clean:
 	@rm -f $(OBJ) $(BIN)
+
+# This is required, otherwise if there exist files named like
+# the following, the rules will not be executed.
+.PHONY: clean test
