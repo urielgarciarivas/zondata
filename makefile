@@ -139,6 +139,11 @@ test: $(BIN)
 	@$(foreach test_binary, $(BIN), ./$(test_binary);)
 	@make clean
 
+# Initialize the repository for compiling and testing.
+init:
+	@mkdir -p obj
+	@mkdir -p test/bin
+
 # Remove created files.
 clean:
 	@rm -f $(OBJ) $(BIN)
