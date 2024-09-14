@@ -2,6 +2,13 @@
 C data structures. From hash maps to linked lists.
 
 ## Build
+Start off by creating the following directories:
+
+```
+./obj/
+./test/bin/
+```
+
 ### Object files
 
 Object files are created in `./obj/`. The following command creates them:
