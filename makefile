@@ -141,8 +141,8 @@ test: $(BIN)
 
 # Initialize the repository for compiling and testing.
 init:
-	@mkdir -p obj
-	@mkdir -p test/bin
+	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(BIN_DIR)
 
 # Remove created files.
 clean:
