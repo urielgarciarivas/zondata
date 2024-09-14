@@ -2,6 +2,12 @@
 C data structures. From hash maps to linked lists.
 
 ## Build
+Before running the main build and test commands, you need to initialize the project by creating the required directories. This can be done by executing the following command:
+
+```
+make init
+```
+
 ### Object files
 
 Object files are created in `./obj/`. The following command creates them:

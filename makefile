@@ -50,7 +50,7 @@ CWARN_UNUSED = -Wunused -Wunused-parameter -Wunused-function -Wunused-label \
 # Declaration Warnings.
 CWARN_DECLARATIONS = -Wstrict-prototypes -Wmissing-prototypes \
 	-Wmissing-declarations -Wmissing-field-initializers -Wmissing-include-dirs \
-	-Wnested-externs # -Wredundant-decls -Wtraditional-conversion
+	-Wnested-externs # -Wredundant-decls # -Wtraditional-conversion
 
 # Switch Warnings.
 CWARN_SWITCH = -Wswitch-default -Wswitch-enum
@@ -77,7 +77,7 @@ CWARN_OVERFLOW_SIZE = -Wstrict-overflow=5 -Wlarger-than=65536 -Wpacked \
 	-Wpacked-not-aligned -Wshift-overflow # -Wpadded
 
 # Compatibility Warnings.
-CWARN_COMPATIBILITY = -Wsign-compare # -Wlong-long -Wc90-c99-compat
+CWARN_COMPATIBILITY = -Wsign-compare # -Wc90-c99-compat # -Wlong-long
 
 # Code Quality Warnings.
 CWARN_CODE_QUALITY = -Waggregate-return -Winvalid-pch -Wmultistatement-macros \
@@ -139,6 +139,15 @@ test: $(BIN)
 	@$(foreach test_binary, $(BIN), ./$(test_binary);)
 	@make clean
 
+# Initialize the repository for compiling and testing.
+init:
+	@mkdir -p obj
+	@mkdir -p test/bin
+
 # Remove created files.
 clean:
 	@rm -f $(OBJ) $(BIN)
+
+# This is required, otherwise if there exist files named like
+# the following, the rules will not be executed.
+.PHONY: clean test
