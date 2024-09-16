@@ -18,7 +18,7 @@ make
 
 ### Build and run tests
 
-Object files are created in `./obj/`, and test binaries are created in `./test/bin/`. The following command creates both, then run the binaries, and then makes clean:
+Object files are created in `./obj/`, and test binaries are created in `./test/bin/`. The following command creates both, then runs the binaries, and then makes clean:
 
 ```
 make test

@@ -89,6 +89,9 @@ TEST(LinkedListAllocation, copy_allocation) {
     EXPECT_EQUAL(original_node->value, copy_node->value);
   }
 
+  EXPECT_EQUAL(original_node, NULL);
+  EXPECT_EQUAL(original_node, copy_node);
+
   deallocate_linked_list(original_list);
   deallocate_linked_list(copy_list);
 }
