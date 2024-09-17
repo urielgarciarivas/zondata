@@ -19,9 +19,12 @@
 #include "../inc/zng_array.h"
 #include "../inc/zng_memory.h"
 
+const size_t __zng_start_capacity_array = 10;
+
 // Forward declarations to follow zng_array.h's order.
 void delete_all_elements_array(zng_array*const arr);
 void add_to_empty_array(zng_array*const arr, int value);
+void add_capacity_array(zng_array*const arr, int value);
 
 inline zng_array* allocate_array(int value) {
   zng_array* response;
@@ -126,7 +129,10 @@ inline void add_to_array(zng_array*const arr, int value) {
   } else if (is_empty_array(arr)) {
     add_to_empty_array(arr, value);
     return;
-  }
+  } /*else if (arr->size == arr->capacity) {
+    add_capacity_array(arr, value);
+    return;
+  }*/
 
   arr->size++;
   REALLOCATE(int, arr->data, arr->size);
@@ -143,9 +149,11 @@ inline void add_to_empty_array(zng_array*const arr, int value) {
   *(arr->data) = value;
 }
 
-//extern void reverse_array(zng_array*const list);
+//void add_capacity_array(zng_array*const arr, int value);
 
-//extern void sort_array(zng_array*const list);
+//void reverse_array(zng_array*const list);
+
+//void sort_array(zng_array*const list);
 
 inline void delete_last_element_array(zng_array*const arr) {
   if (is_null_or_empty_array(arr)) {

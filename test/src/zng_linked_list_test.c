@@ -20,13 +20,13 @@
 #include "../deps/zontest/test.h"
 
 TEST(LinkedListAllocation, simple_allocation) {
-  const int element = 15;
-  zng_linked_list* list = allocate_linked_list(element);
+  const int value = 15;
+  zng_linked_list* list = allocate_linked_list(value);
 
   EXPECT_DIFFERENT(list, NULL);
   EXPECT_DIFFERENT(list->head, NULL);
   EXPECT_DIFFERENT(list->tail, NULL);
-  EXPECT_EQUAL(list->head->value, element);
+  EXPECT_EQUAL(list->head->value, value);
   EXPECT_EQUAL(list->head, list->tail);
   EXPECT_EQUAL(list->size, 1);
 
@@ -63,12 +63,13 @@ TEST(LinkedListAllocation, preset_allocation) {
 }
 
 TEST(LinkedListAllocation, copy_allocation) {
-  const size_t size = 100;
-  zng_linked_list* original_list = allocate_preset_linked_list(size, 0);
+  const int size = 100;
+  zng_linked_list* original_list =
+      allocate_preset_linked_list((size_t) size, 0);
   zng_linked_list_node* original_node = original_list->head;
 
-  for (size_t i = 0; i < size; ++i) {
-    original_node->value = (int) i * 1000;
+  for (int i = 0; i < size; ++i) {
+    original_node->value = i * 1000;
     original_node = original_node->next;
   }
 
@@ -81,7 +82,7 @@ TEST(LinkedListAllocation, copy_allocation) {
   EXPECT_DIFFERENT(copy_list->head, copy_list->tail);
   EXPECT_DIFFERENT(original_list->head, copy_list->head);
   EXPECT_DIFFERENT(original_list->tail, copy_list->tail);
-  EXPECT_EQUAL(copy_list->size, size);
+  EXPECT_EQUAL(copy_list->size, (size_t) size);
 
   for (original_node = original_list->head, copy_node = copy_list->head;
       original_node != NULL && copy_node != NULL;
@@ -97,11 +98,11 @@ TEST(LinkedListAllocation, copy_allocation) {
 }
 
 TEST(LinkedListAlgorithm, reverse_list) {
-  const size_t size = 100;
-  zng_linked_list* list = allocate_preset_linked_list(size, 0);
+  const int size = 100;
+  zng_linked_list* list = allocate_preset_linked_list((size_t) size, 0);
   zng_linked_list_node* node = list->head;
 
-  for (int i = 0; i < (int) size; ++i) {
+  for (int i = 0; i < size; ++i) {
     node->value = i;
     node = node->next;
   }
@@ -111,11 +112,11 @@ TEST(LinkedListAlgorithm, reverse_list) {
   EXPECT_DIFFERENT(list->head, NULL);
   EXPECT_DIFFERENT(list->tail, NULL);
   EXPECT_DIFFERENT(list->head, list->tail);
-  EXPECT_EQUAL(list->size, size);
+  EXPECT_EQUAL(list->size, (size_t) size);
 
   node = list->head;
 
-  for (int i = (int) size - 1; i >= 0; --i) {
+  for (int i = size - 1; i >= 0; --i) {
     EXPECT_EQUAL(node->value, i);
     node = node->next;
   }

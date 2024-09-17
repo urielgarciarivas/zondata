@@ -22,6 +22,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+extern const size_t __zng_start_capacity_array;
+
 typedef struct __zng_array {
   int* data;
   size_t size;
@@ -42,6 +44,7 @@ extern bool are_equal_array(
 
 extern void add_to_array(zng_array*const arr, int value);
 extern void add_to_empty_array(zng_array*const arr, int value);
+extern void add_capacity_array(zng_array*const arr, int value);
 extern void append_to_array(zng_array*const arr, const zng_array*const append);
 
 // TODO:

@@ -20,13 +20,13 @@
 #include "../deps/zontest/test.h"
 
 TEST(ArrayAllocation, simple_allocation) {
-  const int element = 15;
-  zng_array* arr = allocate_array(element);
+  const int value = 15;
+  zng_array* arr = allocate_array(value);
 
   EXPECT_DIFFERENT(arr, NULL);
   EXPECT_DIFFERENT(arr->data, NULL);
   EXPECT_EQUAL(arr->size, 1);
-  EXPECT_EQUAL(*(arr->data), element);
+  EXPECT_EQUAL(*(arr->data), value);
 
   deallocate_array(arr);
 }

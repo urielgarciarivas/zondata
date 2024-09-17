@@ -138,7 +138,7 @@ all: $(OBJ)
 # Testing rule to create and run all tests in BIN.
 test: $(TEST_BIN)
 	@$(foreach test_binary, $(TEST_BIN), ./$(test_binary);)
-	@make clean
+	@make clean --no-print-directory
 
 # Initialize the repository for compiling and testing.
 init:
