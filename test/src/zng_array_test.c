@@ -19,14 +19,12 @@
 #include "../../inc/zng_array.h"
 #include "../deps/zontest/test.h"
 
-TEST(ArrayAllocation, simple_allocation) {
-  const int value = 15;
-  zng_array* arr = allocate_array(value);
+TEST(ArrayAllocation, empty_allocation) {
+  zng_array* arr = allocate_empty_array();
 
   EXPECT_DIFFERENT(arr, NULL);
-  EXPECT_DIFFERENT(arr->data, NULL);
-  EXPECT_EQUAL(arr->size, 1);
-  EXPECT_EQUAL(*(arr->data), value);
+  EXPECT_EQUAL(arr->data, NULL);
+  EXPECT_EQUAL(arr->size, 0);
 
   deallocate_array(arr);
 }
@@ -43,16 +41,6 @@ TEST(ArrayAllocation, preset_allocation) {
   for (size_t i = 0; i < arr->size; ++i) {
     EXPECT_EQUAL(arr->data[i], value);
   }
-
-  deallocate_array(arr);
-}
-
-TEST(ArrayAllocation, empty_allocation) {
-  zng_array* arr = allocate_empty_array();
-
-  EXPECT_DIFFERENT(arr, NULL);
-  EXPECT_EQUAL(arr->data, NULL);
-  EXPECT_EQUAL(arr->size, 0);
 
   deallocate_array(arr);
 }

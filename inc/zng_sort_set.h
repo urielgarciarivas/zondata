@@ -33,8 +33,11 @@ typedef struct __zng_sort_set {
   zng_sort_set_node* root;
 } zng_sort_set;
 
-extern zng_sort_set* allocate_sort_set(int value);
+// Every new set needs to be deleted using deallocate_sort_set(...).
 extern zng_sort_set* allocate_empty_sort_set(void);
+extern zng_sort_set* allocate_copy_sort_set(const zng_sort_set*const set);
+extern zng_sort_set* allocate_from_raw_sort_set(
+    const int*const array, size_t size);
 
 extern bool is_null_or_empty_sort_set(const zng_sort_set*const set);
 extern bool is_empty_sort_set(const zng_sort_set*const set);

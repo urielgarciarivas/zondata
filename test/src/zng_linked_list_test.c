@@ -19,20 +19,6 @@
 #include "../../inc/zng_linked_list.h"
 #include "../deps/zontest/test.h"
 
-TEST(LinkedListAllocation, simple_allocation) {
-  const int value = 15;
-  zng_linked_list* list = allocate_linked_list(value);
-
-  EXPECT_DIFFERENT(list, NULL);
-  EXPECT_DIFFERENT(list->head, NULL);
-  EXPECT_DIFFERENT(list->tail, NULL);
-  EXPECT_EQUAL(list->head->value, value);
-  EXPECT_EQUAL(list->head, list->tail);
-  EXPECT_EQUAL(list->size, 1);
-
-  deallocate_linked_list(list);
-}
-
 TEST(LinkedListAllocation, empty_allocation) {
   zng_linked_list* list = allocate_empty_linked_list();
 
@@ -129,9 +115,9 @@ TEST(LinkedListTest, all_tests) {
   const size_t length = 5;
   const int first_element = 0;
   const int last_element = (int) length - 1;
-  zng_linked_list* list = allocate_linked_list(first_element);
+  zng_linked_list* list = allocate_empty_linked_list();
 
-  for (int i = first_element + 1; i <= last_element; ++i) {
+  for (int i = first_element; i <= last_element; ++i) {
     add_to_linked_list(list, i);
   }
 

@@ -19,18 +19,6 @@
 #include "../../inc/zng_sort_set.h"
 #include "../deps/zontest/test.h"
 
-TEST(SortSetAllocation, simple_allocation) {
-  const int value = 15;
-  zng_sort_set* set = allocate_sort_set(value);
-
-  EXPECT_DIFFERENT(set, NULL);
-  EXPECT_DIFFERENT(set->root, NULL);
-  EXPECT_EQUAL(set->size, 1);
-  EXPECT_EQUAL(set->root->value, value);
-
-  deallocate_sort_set(set);
-}
-
 TEST(SortSetAllocation, empty_allocation) {
   zng_sort_set* set = allocate_empty_sort_set();
 

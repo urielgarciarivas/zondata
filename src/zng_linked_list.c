@@ -21,19 +21,6 @@
 #include "../inc/zng_linked_list.h"
 #include "../inc/zng_memory.h"
 
-inline zng_linked_list* allocate_linked_list(int value) {
-  zng_linked_list* response;
-
-  ALLOCATE(zng_linked_list, response);
-  ALLOCATE(zng_linked_list_node, response->head);
-  response->size = 1;
-  response->head->value = value;
-  response->head->next = NULL;
-  response->tail = response->head;
-
-  return response;
-}
-
 inline zng_linked_list* allocate_empty_linked_list(void) {
   zng_linked_list* response;
 
