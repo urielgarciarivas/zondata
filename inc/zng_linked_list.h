@@ -38,7 +38,7 @@ extern zng_linked_list* allocate_empty_linked_list(void);
 extern zng_linked_list* allocate_preset_linked_list(size_t size, int value);
 extern zng_linked_list* allocate_copy_linked_list(
     const zng_linked_list*const list);
-extern zng_linked_list* copy_from_raw_linked_list(
+extern zng_linked_list* allocate_copy_from_raw_linked_list(
     const int*const pointer, size_t size);
 
 extern bool is_null_or_empty_linked_list(const zng_linked_list*const list);

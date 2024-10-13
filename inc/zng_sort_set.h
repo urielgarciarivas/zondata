@@ -35,8 +35,10 @@ typedef struct __zng_sort_set {
 
 // Every new set needs to be deleted using deallocate_sort_set(...).
 extern zng_sort_set* allocate_empty_sort_set(void);
+extern zng_sort_set* allocate_preset_sort_set(
+    size_t size, int start, int increment);
 extern zng_sort_set* allocate_copy_sort_set(const zng_sort_set*const set);
-extern zng_sort_set* allocate_from_raw_sort_set(
+extern zng_sort_set* allocate_copy_from_raw_sort_set(
     const int*const array, size_t size);
 
 extern bool is_null_or_empty_sort_set(const zng_sort_set*const set);
@@ -52,6 +54,6 @@ extern bool exist_in_sort_set(const zng_sort_set*const set, int target);
 // TODO:
 extern void delete_nodes_recursive_sort_set(zng_sort_set_node* node);
 extern void delete_all_elements_sort_set(zng_sort_set*const node);
-extern void deallocate_sort_set(zng_sort_set* list);
+extern void deallocate_sort_set(zng_sort_set* set);
 
 #endif // __ZNG_SORT_SET_H__

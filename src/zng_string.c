@@ -21,15 +21,13 @@
 #include "../inc/zng_memory.h"
 #include "../inc/zng_string.h"
 
-const size_t __zng_start_string_capacity = 10;
-
 zng_string* allocate_empty_string(void) {
   zng_string* response;
 
   ALLOCATE(zng_string, response);
+  response->data = NULL;
   response->size = 0;
   response->capacity = 0;
-  response->data = NULL;
 
   return response;
 }
@@ -78,6 +76,8 @@ bool are_equal_string(const zng_string*const lhs, const zng_string*const rhs) {
 void add_to_string(zng_string*const string, char value);
 void add_to_empty_string(zng_string*const string, char value);
 void append_to_string(
+    zng_string*const string, const zng_string*const append);
+void append_from_raw_to_string(
     zng_string*const string, const char*const append, size_t size);
 
 // TODO:

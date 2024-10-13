@@ -22,8 +22,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-extern const size_t __zng_start_array_capacity;
-
 typedef struct __zng_array {
   int* data;
   size_t size;
@@ -31,7 +29,6 @@ typedef struct __zng_array {
 } zng_array;
 
 // Every new array needs to be deleted using deallocate_array(...).
-extern zng_array* allocate_array(int value);
 extern zng_array* allocate_empty_array(void);
 extern zng_array* allocate_preset_array(size_t size, int value);
 extern zng_array* allocate_copy_array(const zng_array*const list);
@@ -59,6 +56,7 @@ extern void sort_array(zng_array*const list);
 extern void delete_first_match_array(zng_array*const array);
 extern void delete_last_element_array(zng_array*const array);
 extern void delete_all_elements_array(zng_array*const array);
+extern void deallocate_data_only_array(zng_array*const array);
 extern void deallocate_array(zng_array* array);
 
 #endif // __ZNG_ARRAY_H__

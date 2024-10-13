@@ -23,6 +23,7 @@
 
 typedef struct __zng_hash_set {
   size_t size;
+  size_t capacity;
 } zng_hash_set;
 
 #endif // __ZNG_HASH_SET_H__

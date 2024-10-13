@@ -22,8 +22,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-extern const size_t __zng_start_string_capacity;
-
 typedef struct __zng_string {
   char* data;
   size_t size;
@@ -47,6 +45,8 @@ extern bool are_equal_string(
 extern void add_to_string(zng_string*const string, char value);
 extern void add_to_empty_string(zng_string*const string, char value);
 extern void append_to_string(
+    zng_string*const string, const zng_string*const append);
+extern void append_from_raw_to_string(
     zng_string*const string, const char*const append, size_t size);
 
 // TODO:

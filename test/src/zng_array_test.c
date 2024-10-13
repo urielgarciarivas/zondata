@@ -25,6 +25,7 @@ TEST(ArrayAllocation, empty_allocation) {
   EXPECT_DIFFERENT(arr, NULL);
   EXPECT_EQUAL(arr->data, NULL);
   EXPECT_EQUAL(arr->size, 0);
+  EXPECT_EQUAL(arr->capacity, 0);
 
   deallocate_array(arr);
 }
@@ -37,6 +38,7 @@ TEST(ArrayAllocation, preset_allocation) {
   EXPECT_DIFFERENT(arr, NULL);
   EXPECT_DIFFERENT(arr->data, NULL);
   EXPECT_EQUAL(arr->size, size);
+  EXPECT_EQUAL(arr->capacity, size);
 
   for (size_t i = 0; i < arr->size; ++i) {
     EXPECT_EQUAL(arr->data[i], value);
@@ -54,6 +56,7 @@ TEST(ArrayAllocation, copy_allocation) {
   EXPECT_DIFFERENT(arr_copy, NULL);
   EXPECT_DIFFERENT(arr_copy->data, NULL);
   EXPECT_EQUAL(arr_copy->size, arr->size);
+  EXPECT_EQUAL(arr_copy->capacity, arr->size);
 
   for (size_t i = 0; i < arr->size; ++i) {
     EXPECT_EQUAL(arr->data[i], arr_copy->data[i]);
@@ -86,15 +89,12 @@ TEST(ArrayManipulation, delete_all) {
   const int value = 59;
   zng_array* arr = allocate_preset_array(size, value);
 
-  EXPECT_DIFFERENT(arr, NULL);
-  EXPECT_DIFFERENT(arr->data, NULL);
-  EXPECT_EQUAL(arr->size, size);
-
   delete_all_elements_array(arr);
 
   EXPECT_DIFFERENT(arr, NULL);
-  EXPECT_EQUAL(arr->data, NULL);
+  EXPECT_DIFFERENT(arr->data, NULL);
   EXPECT_EQUAL(arr->size, 0);
+  EXPECT_EQUAL(arr->capacity, size);
 
   deallocate_array(arr);
 }

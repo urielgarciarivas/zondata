@@ -141,7 +141,8 @@ $(TEST_BIN_DIR)/%_test: $(TEST_SRC_DIR)/%_test.c $(OBJ_DIR)/%.o
 # the following, the rules will not be executed.
 .PHONY: init all test clean
 
-# Initialize the repository for compiling and testing.
+# Initialize the repository for compiling and testing. This is required
+# to do only once before doing any other goal with make.
 init:
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(TEST_BIN_DIR)

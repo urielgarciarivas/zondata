@@ -19,19 +19,19 @@
 #include "../inc/zng_array.h"
 #include "../inc/zng_memory.h"
 
-const size_t __zng_start_array_capacity = 10;
-
-// Forward declarations to follow zng_array.h's order.
-void delete_all_elements_array(zng_array*const array);
+// Forward declarations to follow header's order.
+bool is_empty_array(const zng_array*const array);
 void add_to_empty_array(zng_array*const array, int value);
 void add_capacity_array(zng_array*const array, int value);
+void delete_all_elements_array(zng_array*const array);
 
 inline zng_array* allocate_empty_array(void) {
   zng_array* response;
 
   ALLOCATE(zng_array, response);
-  response->size = 0;
   response->data = NULL;
+  response->size = 0;
+  response->capacity = 0;
 
   return response;
 }
@@ -46,6 +46,7 @@ inline zng_array* allocate_preset_array(size_t size, int value) {
   ALLOCATE(zng_array, response);
   COALLOCATE(int, response->data, size);
   response->size = size;
+  response->capacity = size;
 
   for (size_t i = 0; i < response->size; ++i) {
     response->data[i] = value;
@@ -61,7 +62,12 @@ zng_array* allocate_copy_array(const zng_array*const array) {
     return allocate_empty_array();
   }
 
-  zng_array* copy = allocate_preset_array(array->size, 0);
+  zng_array* copy;
+
+  ALLOCATE(zng_array, copy);
+  COALLOCATE(int, copy->data, array->size);
+  copy->size = array->size;
+  copy->capacity = copy->size;
 
   for (size_t i = 0; i < copy->size; ++i) {
     copy->data[i] = array->data[i];
@@ -75,6 +81,7 @@ inline zng_array* allocate_move_from_raw_array(int* array, size_t size) {
 
   ALLOCATE(zng_array, response);
   response->size = size;
+  response->capacity = response->size;
   response->data = array;
 
   return response;
@@ -83,11 +90,11 @@ inline zng_array* allocate_move_from_raw_array(int* array, size_t size) {
 //zng_array* allocate_copy_from_raw_array(const int*const array, size_t size);
 
 inline bool is_null_or_empty_array(const zng_array*const array) {
-  return array == NULL || (array->data == NULL && array->size == 0);
+  return array == NULL || array->size == 0;
 }
 
 inline bool is_empty_array(const zng_array*const array) {
-  return array != NULL && array->data == NULL && array->size == 0;
+  return array != NULL && array->size == 0;
 }
 
 bool exist_in_array(const zng_array*const array, int target) {
@@ -124,33 +131,46 @@ bool are_equal_array(const zng_array*const lhs, const zng_array*const rhs) {
   return true;
 }
 
+// TODO: There is a memory leak here. If the user allocates an array, then calls
+// delete_last_element_array or delete_all_elements_array, and then calls
+// add_to_array, the previous allocated memory will not be freed.
 inline void add_to_array(zng_array*const array, int value) {
-  if (array == NULL) {
-    return;
-  } else if (is_empty_array(array)) {
-    add_to_empty_array(array, value);
-    return;
-  } /*else if (array->size == array->capacity) {
+  if (is_null_or_empty_array(array)) {
+    if (is_empty_array(array)) {
+      add_to_empty_array(array, value);
+    }
+  } else if (array->size == array->capacity) {
     add_capacity_array(array, value);
-    return;
-  }*/
-
-  array->size++;
-  REALLOCATE(int, array->data, array->size);
-  array->data[array->size - 1] = value;
+  } else {
+    array->data[array->size++] = value;
+  }
 }
 
 inline void add_to_empty_array(zng_array*const array, int value) {
   if (array == NULL) {
     return;
+  } else if (array->data != NULL && array->capacity > array->size) {
+    array->data[array->size++] = value;
+  } else {
+    ALLOCATE(int, array->data);
+    array->size = 1;
+    array->capacity = 1;
+    *(array->data) = value;
   }
-
-  ALLOCATE(int, array->data);
-  array->size = 1;
-  *(array->data) = value;
 }
 
-//void add_capacity_array(zng_array*const array, int value);
+void add_capacity_array(zng_array*const array, int value) {
+  if (array == NULL) {
+    return;
+  } else if (is_empty_array(array)) {
+    add_to_empty_array(array, value);
+    return;
+  }
+
+  array->capacity *= 2;
+  REALLOCATE(int, array->data, array->capacity);
+  array->data[array->size++] = value;
+}
 
 //void reverse_array(zng_array*const list);
 
@@ -165,11 +185,18 @@ inline void delete_last_element_array(zng_array*const array) {
   }
 
   array->size--;
-  REALLOCATE(int, array->data, array->size);
 }
 
 inline void delete_all_elements_array(zng_array*const array) {
   if (is_null_or_empty_array(array)) {
+    return;
+  }
+
+  array->size = 0;
+}
+
+inline void deallocate_data_only_array(zng_array*const array) {
+  if (array == NULL) {
     return;
   }
 
@@ -178,6 +205,7 @@ inline void delete_all_elements_array(zng_array*const array) {
   }
 
   array->size = 0;
+  array->capacity = 0;
 }
 
 inline void deallocate_array(zng_array* array) {
@@ -185,6 +213,12 @@ inline void deallocate_array(zng_array* array) {
     return;
   }
 
-  delete_all_elements_array(array);
+  if (array->data != NULL) {
+    DEALLOCATE(array->data);
+  }
+
+  array->size = 0;
+  array->capacity = 0;
+
   DEALLOCATE(array);
 }
