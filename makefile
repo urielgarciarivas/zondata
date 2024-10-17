@@ -133,7 +133,7 @@ $(TEST_BIN_DIR)/%_test: $(TEST_SRC_DIR)/%_test.c $(OBJ_DIR)/%.o
 	@$(CC) $(CFLAGS) $^ -o $@
 
 # Set 'all' as the default goal when running the make commad by itself.
-# It is required. Without it, 'init' would be the default goal since
+# This is required. Without it, 'init' would be the default goal since
 # it comes before 'all'.
 .DEFAULT_GOAL := all
 
