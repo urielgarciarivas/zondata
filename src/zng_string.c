@@ -97,4 +97,18 @@ void sort_string(zng_string*const string);
 void delete_first_match_string(zng_string*const string);
 void delete_last_element_string(zng_string*const string);
 void delete_all_elements_string(zng_string*const string);
-void deallocate_string(zng_string* string);
+
+inline void deallocate_string(zng_string* string) {
+  if (string == NULL) {
+    return;
+  }
+
+  if (string->data != NULL) {
+    DEALLOCATE(string->data);
+  }
+
+  string->size = 0;
+  string->capacity = 0;
+
+  DEALLOCATE(string);
+}

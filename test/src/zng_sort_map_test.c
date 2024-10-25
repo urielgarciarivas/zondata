@@ -19,11 +19,14 @@
 #include "../../inc/zng_sort_map.h"
 #include "../deps/zontest/test.h"
 
-TEST(SortMapTest, all_tests) {
-  const size_t size = 10;
-  zng_sort_map map;
-  map.size = size;
-  EXPECT_EQUAL(map.size, size);
+TEST(SortMapAllocation, empty_allocation) {
+  zng_sort_map* map = allocate_empty_sort_map();
+
+  EXPECT_DIFFERENT(map, NULL);
+  EXPECT_EQUAL(map->size, 0);
+  EXPECT_EQUAL(map->root, NULL);
+
+  deallocate_sort_map(map);
 }
 
 int main(void) {
