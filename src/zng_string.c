@@ -21,47 +21,31 @@
 #include "../inc/zng_memory.h"
 #include "../inc/zng_string.h"
 
-zng_string* allocate_string(const char*const sentence) {
-  zng_string* response;
-  const size_t size = strlen(sentence);
-
-  ALLOCATE(zng_string, response);
-  response->size = size + 1;
-  response->capacity = size * 3;
-  COALLOCATE(char, response->data, response->capacity);
-
-  for (size_t i = 0; i < response->capacity; ++i) {
-    response->data[i] = (i < size ? sentence[i] : '\0');
-  }
-
-  return response;
-}
-
 zng_string* allocate_empty_string(void) {
   zng_string* response;
 
   ALLOCATE(zng_string, response);
+  response->data = NULL;
   response->size = 0;
   response->capacity = 0;
-  response->data = NULL;
 
   return response;
 }
 
 zng_string* allocate_preset_string(size_t size, char value);
-zng_string* allocate_copy_string(const zng_string*const list);
+zng_string* allocate_copy_string(const zng_string*const string);
 
-inline bool is_null_or_empty_string(const zng_string*const sentence) {
-  return sentence == NULL || (sentence->data == NULL && sentence->size == 0);
+inline bool is_null_or_empty_string(const zng_string*const string) {
+  return string == NULL || (string->data == NULL && string->size == 0);
 }
 
-inline bool is_empty_string(const zng_string*const sentence) {
-  return sentence != NULL && sentence->data == NULL && sentence->size == 0;
+inline bool is_empty_string(const zng_string*const string) {
+  return string != NULL && string->data == NULL && string->size == 0;
 }
 
-bool exist_in_string(const zng_string*const sentence, char target) {
-  for (size_t i = 0; i < sentence->size; ++i) {
-    if (sentence->data[i] == target) {
+bool exist_in_string(const zng_string*const string, char target) {
+  for (size_t i = 0; i < string->size; ++i) {
+    if (string->data[i] == target) {
         return true;
     }
   }
@@ -89,16 +73,42 @@ bool are_equal_string(const zng_string*const lhs, const zng_string*const rhs) {
   return true;
 }
 
-void add_to_string(zng_string*const arr, char value);
-void add_to_empty_string(zng_string*const arr, char value);
-void append_to_string(zng_string*const arr, const char*const append);
+void add_to_string(zng_string*const string, char value);
+void add_to_empty_string(zng_string*const string, char value);
+void append_to_string(
+    zng_string*const string, const zng_string*const append);
+void append_from_raw_to_string(
+    zng_string*const string, const char*const append, size_t size);
 
 // TODO:
-void reverse_string(zng_string*const list);
-void sort_string(zng_string*const list);
+void reverse_string(zng_string*const string) {
+  char aux;
+
+  for (size_t i = 0, j = string->size - 1; i < j; ++i, --j) {
+    aux = string->data[i];
+    string->data[i] = string->data[j];
+    string->data[j] = aux;
+  }
+}
+
+void sort_string(zng_string*const string);
 
 // TODO:
-void delete_first_match_string(zng_string*const arr);
-void delete_last_element_string(zng_string*const arr);
-void delete_all_elements_string(zng_string*const arr);
-void deallocate_string(zng_string* arr);
+void delete_first_match_string(zng_string*const string);
+void delete_last_element_string(zng_string*const string);
+void delete_all_elements_string(zng_string*const string);
+
+inline void deallocate_string(zng_string* string) {
+  if (string == NULL) {
+    return;
+  }
+
+  if (string->data != NULL) {
+    DEALLOCATE(string->data);
+  }
+
+  string->size = 0;
+  string->capacity = 0;
+
+  DEALLOCATE(string);
+}

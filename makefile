@@ -119,18 +119,33 @@ OBJ_DIR = ./obj/
 SRC_DIR = ./src/
 OBJ = $(patsubst %, $(OBJ_DIR)/%.o, $(TARGETS))
 
+# General rule for every object file.
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@$(CC) $(CFLAGS) -x c -c $< -o $@
+
 # Test files.
 TEST_SRC_DIR = ./test/src/
 TEST_BIN_DIR = ./test/bin/
 TEST_BIN = $(patsubst %, $(TEST_BIN_DIR)/%_test, $(TARGETS))
 
-# General rule for every object file.
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) $(CFLAGS) -x c -c $< -o $@
-
 # General rule for every test binary.
 $(TEST_BIN_DIR)/%_test: $(TEST_SRC_DIR)/%_test.c $(OBJ_DIR)/%.o
 	@$(CC) $(CFLAGS) $^ -o $@
+
+# Set 'all' as the default goal when running the make commad by itself.
+# This is required. Without it, 'init' would be the default goal since
+# it comes before 'all'.
+.DEFAULT_GOAL := all
+
+# This is required, otherwise if there exist files named like
+# the following, the rules will not be executed.
+.PHONY: init all test clean
+
+# Initialize the repository for compiling and testing. This is required
+# to do only once before doing any other goal with make.
+init:
+	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(TEST_BIN_DIR)
 
 # Top-level rule. Creates objects only.
 all: $(OBJ)
@@ -138,17 +153,8 @@ all: $(OBJ)
 # Testing rule to create and run all tests in BIN.
 test: $(TEST_BIN)
 	@$(foreach test_binary, $(TEST_BIN), ./$(test_binary);)
-	@make clean
-
-# Initialize the repository for compiling and testing.
-init:
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(TEST_BIN_DIR)
+	@make clean --no-print-directory
 
 # Remove created files.
 clean:
 	@rm -f $(OBJ) $(TEST_BIN)
-
-# This is required, otherwise if there exist files named like
-# the following, the rules will not be executed.
-.PHONY: clean test

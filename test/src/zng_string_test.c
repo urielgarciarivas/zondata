@@ -19,11 +19,15 @@
 #include "../../inc/zng_string.h"
 #include "../deps/zontest/test.h"
 
-TEST(StringTest, all_tests) {
-  const size_t size = 10;
-  zng_string sentence;
-  sentence.size = size;
-  EXPECT_EQUAL(sentence.size, size);
+TEST(StringAllocation, empty_allocation) {
+  zng_string* string = allocate_empty_string();
+
+  EXPECT_DIFFERENT(string, NULL);
+  EXPECT_EQUAL(string->data, NULL);
+  EXPECT_EQUAL(string->size, 0);
+  EXPECT_EQUAL(string->capacity, 0);
+
+  deallocate_string(string);
 }
 
 int main(void) {

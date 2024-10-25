@@ -19,19 +19,6 @@
 #include "../inc/zng_memory.h"
 #include "../inc/zng_sort_set.h"
 
-inline zng_sort_set* allocate_sort_set(int value) {
-  zng_sort_set* response;
-
-  ALLOCATE(zng_sort_set, response);
-  ALLOCATE(zng_sort_set_node, response->root);
-  response->size = 1;
-  response->root->value = value;
-  response->root->left = NULL;
-  response->root->right = NULL;
-
-  return response;
-}
-
 inline zng_sort_set* allocate_empty_sort_set(void) {
   zng_sort_set* response;
 

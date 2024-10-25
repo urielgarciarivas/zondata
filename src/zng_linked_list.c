@@ -21,18 +21,8 @@
 #include "../inc/zng_linked_list.h"
 #include "../inc/zng_memory.h"
 
-inline zng_linked_list* allocate_linked_list(int value) {
-  zng_linked_list* response;
-
-  ALLOCATE(zng_linked_list, response);
-  ALLOCATE(zng_linked_list_node, response->head);
-  response->size = 1;
-  response->head->value = value;
-  response->head->next = NULL;
-  response->tail = response->head;
-
-  return response;
-}
+// Forward declarations to follow header's order.
+bool is_empty_linked_list(const zng_linked_list*const list);
 
 inline zng_linked_list* allocate_empty_linked_list(void) {
   zng_linked_list* response;
@@ -46,10 +36,20 @@ inline zng_linked_list* allocate_empty_linked_list(void) {
 }
 
 zng_linked_list* allocate_preset_linked_list(size_t size, int value) {
-  zng_linked_list* response = allocate_empty_linked_list();
+  zng_linked_list* response;
 
-  while (size--) {
-    add_to_linked_list(response, value);
+  ALLOCATE(zng_linked_list, response);
+  ALLOCATE(zng_linked_list_node, response->head);
+  response->head->value = value;
+  response->tail = response->head;
+  response->size = 1;
+
+  for (size_t i = 1; i < size; ++i) {
+    ALLOCATE(zng_linked_list_node, response->tail->next);
+    response->tail = response->tail->next;
+    response->tail->value = value;
+    response->tail->next = NULL;
+    response->size++;
   }
 
   return response;
@@ -63,15 +63,30 @@ zng_linked_list* allocate_copy_linked_list(
     return allocate_empty_linked_list();
   }
 
-  zng_linked_list* copy = allocate_preset_linked_list(original->size, 0);
+  zng_linked_list* copy;
   zng_linked_list_node* original_node = original->head;
+
+  ALLOCATE(zng_linked_list, copy);
+  ALLOCATE(zng_linked_list_node, copy->head);
+
   zng_linked_list_node* copy_node = copy->head;
 
-  while (original_node != NULL) {
+  if (original_node != NULL) {
     copy_node->value = original_node->value;
+    copy->size = 1;
     original_node = original_node->next;
-    copy_node = copy_node->next;
   }
+
+  while (original_node != NULL) {
+    ALLOCATE(zng_linked_list_node, copy_node->next);
+    copy_node = copy_node->next;
+    copy_node->value = original_node->value;
+    copy_node->next = NULL;
+    original_node = original_node->next;
+    copy->size++;
+  }
+
+  copy->tail = copy_node;
 
   return copy;
 }
@@ -217,6 +232,7 @@ void delete_first_match_linked_list(zng_linked_list*const list, int target) {
 
   if (node->value == target) {
     if (list->size == 1) {
+      // TODO: We should not dallocate the entire linked list.
       deallocate_linked_list(list);
       return;
     }
