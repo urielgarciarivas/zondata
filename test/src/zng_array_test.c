@@ -111,6 +111,7 @@ TEST(ArrayVerification, check_if_exists) {
   EXPECT_TRUE(exist_in_array(arr, size / 2));
   EXPECT_TRUE(exist_in_array(arr, size - 1));
   EXPECT_FALSE(exist_in_array(arr, size));
+  EXPECT_FALSE(exist_in_array(arr, size * -1));
   EXPECT_FALSE(exist_in_array(arr, 10000));
   EXPECT_FALSE(exist_in_array(arr, -10000));
 
