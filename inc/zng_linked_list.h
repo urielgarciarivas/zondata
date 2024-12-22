@@ -47,7 +47,7 @@ extern bool exist_in_linked_list(const zng_linked_list*const list, int value);
 extern bool are_equal_linked_list(
     const zng_linked_list*const lhs, const zng_linked_list*const rhs);
 
-// Example output to screen: "list = {1}->{2}->{3}->{4}->{5}".
+// Prints to stdout. Example output: "list = {1}->{2}->{3}->{4}->{5}".
 extern void print_linked_list(const zng_linked_list*const list);
 
 extern void add_to_linked_list(zng_linked_list*const list, int value);
