@@ -17,7 +17,9 @@
 # Compilation. Activate as many warnings as possible for maximum safety.
 # TODO: Include -Wredundant-decls -Wpadded -Wc90-c99-compat
 #               -Wtraditional-conversion -fanalyzer -Wlong-long
-# NOTE: Exclude -Wc++-compat -Wabi-tag
+#               -Wtraditional
+# NOTE: Exclude -Wc++-compat -Wabi-tag -Wdeprecated-enum-float-conversion
+#               -Wdeprecated-enum-enum-conversion -Wvolatile -Wsign-promo
 CC = gcc
 
 # General Warnings.
@@ -32,7 +34,7 @@ CWARN_CONVERSION_FORMAT = -Wconversion -Wformat=2 -Wformat-security \
 CWARN_VARIABLES = -Wshadow -Wwrite-strings -Wlogical-op -Wfloat-equal \
 	-Wpointer-arith -Wchar-subscripts -Wzero-length-bounds -Warray-bounds \
 	-Wduplicated-cond -Winit-self -Wduplicated-branches \
-	-Wlogical-not-parentheses
+	-Wlogical-not-parentheses -Wattribute-alias
 
 # Deprecated and Legacy Warnings.
 CWARN_DEPRECATED = -Wdeprecated-declarations -Wold-style-definition \
@@ -74,10 +76,11 @@ CWARN_IMPLICIT = -Wimplicit-int -Wimplicit-function-declaration \
 
 # Overflow and Size Warnings.
 CWARN_OVERFLOW_SIZE = -Wstrict-overflow=5 -Wlarger-than=65536 -Wpacked \
-	-Wpacked-not-aligned -Wshift-overflow # -Wpadded
+	-Wpacked-not-aligned -Wshift-overflow -Woverflow # -Wpadded
 
 # Compatibility Warnings.
-CWARN_COMPATIBILITY = -Wsign-compare # -Wc90-c99-compat # -Wlong-long
+CWARN_COMPATIBILITY = -Wsign-compare -Wtautological-compare \
+	-Wshadow-compatible-local -Wc99-c11-compat # -Wc90-c99-compat # -Wlong-long
 
 # Code Quality Warnings.
 CWARN_CODE_QUALITY = -Waggregate-return -Winvalid-pch -Wmultistatement-macros \
@@ -85,7 +88,9 @@ CWARN_CODE_QUALITY = -Waggregate-return -Winvalid-pch -Wmultistatement-macros \
 	-Wstringop-truncation -Wnormalized=nfkc -Walloc-zero -Wparentheses \
 	-Wshift-count-negative -Wshift-count-overflow -Wmissing-noreturn \
 	-Wvariadic-macros -Wjump-misses-init -Wmain -Wvector-operation-performance \
-	-Wsequence-point -Wreturn-local-addr
+	-Wsequence-point -Wreturn-local-addr -Wshift-negative-value \
+	-Wsuggest-attribute=noreturn -Wsuggest-attribute=pure \
+	-Wsuggest-attribute=const -Wsuggest-attribute=malloc
 
 # All flags.
 CFLAGS = $(CWARN_GENERAL) \
