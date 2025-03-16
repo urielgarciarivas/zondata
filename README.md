@@ -1,5 +1,5 @@
 # zondata
-C data structures. From hash maps to linked lists.
+Data structures library written in C. From hash maps to linked lists.
 
 ## Build
 Before running the main build and test commands, you need to initialize the project by creating the required directories. This can be done by executing the following command:
