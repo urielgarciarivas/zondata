@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Uriel García Rivas
+ * Copyright (c) 2021-2025 Uriel García Rivas
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@ extern bool exist_in_linked_list(const zng_linked_list*const list, int value);
 extern bool are_equal_linked_list(
     const zng_linked_list*const lhs, const zng_linked_list*const rhs);
 
-// Example output to screen: "list = {1}->{2}->{3}->{4}->{5}".
+// Prints to stdout. Example output: "list = {1}->{2}->{3}->{4}->{5}".
 extern void print_linked_list(const zng_linked_list*const list);
 
 extern void add_to_linked_list(zng_linked_list*const list, int value);

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Uriel García Rivas
+ * Copyright (c) 2021-2025 Uriel García Rivas
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -111,6 +111,7 @@ TEST(ArrayVerification, check_if_exists) {
   EXPECT_TRUE(exist_in_array(arr, size / 2));
   EXPECT_TRUE(exist_in_array(arr, size - 1));
   EXPECT_FALSE(exist_in_array(arr, size));
+  EXPECT_FALSE(exist_in_array(arr, size * -1));
   EXPECT_FALSE(exist_in_array(arr, 10000));
   EXPECT_FALSE(exist_in_array(arr, -10000));
 
