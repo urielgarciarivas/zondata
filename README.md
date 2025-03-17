@@ -1,5 +1,5 @@
 # zondata
-Zondata is a library for data structures written in C. From hash maps to linked lists.
+Zondata is a library for data structures written in C, from hash maps to linked lists.
 
 ## Build
 Before running the main build and test commands, you need to initialize the project by creating the required directories. This can be done by executing the following command:
